@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(277, 20%, 95%);
+  --muted-foreground: hsl(277, 10%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(277, 20%, 90%);
+  --input: hsl(277, 20%, 90%);
+  --primary: hsl(277, 90%, 54%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(277, 20%, 95%);
+  --secondary-foreground: hsl(277, 90%, 10%);
+  --accent: hsl(277, 20%, 95%);
+  --accent-foreground: hsl(277, 90%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(277, 90%, 54%);
+  --radius: 0.5rem;
+  
+  /* Purple color palette */
+  --purple-50: hsl(277, 100%, 98%);
+  --purple-100: hsl(277, 90%, 95%);
+  --purple-200: hsl(277, 85%, 89%);
+  --purple-300: hsl(277, 80%, 78%);
+  --purple-400: hsl(277, 75%, 65%);
+  --purple-500: hsl(277, 70%, 54%);
+  --purple-600: hsl(277, 65%, 45%);
+  --purple-700: hsl(277, 60%, 36%);
+  --purple-800: hsl(277, 55%, 28%);
+  --purple-900: hsl(277, 50%, 20%);
+}
+
+.dark {
+  --background: hsl(277, 20%, 4%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(277, 15%, 15%);
+  --muted-foreground: hsl(277, 10%, 64.9%);
+  --popover: hsl(277, 20%, 4%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(277, 20%, 4%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(277, 15%, 15%);
+  --input: hsl(277, 15%, 15%);
+  --primary: hsl(277, 70%, 54%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(277, 15%, 15%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(277, 15%, 15%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(277, 70%, 54%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .gradient-purple {
+    background: linear-gradient(135deg, hsl(277, 70%, 54%) 0%, hsl(277, 60%, 36%) 100%);
+  }
+  
+  .gradient-purple-light {
+    background: linear-gradient(135deg, hsl(277, 100%, 98%) 0%, hsl(277, 90%, 95%) 100%);
+  }
+  
+  .text-gradient-purple {
+    background: linear-gradient(135deg, hsl(277, 70%, 54%) 0%, hsl(277, 60%, 36%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
