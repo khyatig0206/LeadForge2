@@ -33,7 +33,7 @@ export default function Home() {
         '(min-width: 1024px)': { slidesToScroll: 3 }
       }
     },
-    [Autoplay({ delay: 4000, stopOnInteraction: false })]
+    [Autoplay({ delay: 6000, stopOnInteraction: false })]
   );
 
   useEffect(() => {
@@ -228,10 +228,10 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gradient-purple mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-700 bg-clip-text text-transparent mb-4">
               Real Results From Real Coaches
             </h2>
-            <p className="text-xl text-gradient-purple max-w-2xl mx-auto">
+            <p className="text-xl bg-gradient-to-r from-purple-600 via-purple-500 to-purple-700 bg-clip-text text-transparent max-w-2xl mx-auto">
               See how our content funnel system transformed their businesses
             </p>
           </motion.div>
@@ -241,7 +241,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="embla carousel-gradient p-6 rounded-2xl"
+            className="embla"
             ref={emblaRef}
           >
             <div className="embla__container">
