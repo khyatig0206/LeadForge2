@@ -111,46 +111,46 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
+    <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-purple-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-50 border-b border-purple-100 dark:border-purple-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gradient-purple">
+      <nav className="fixed top-0 left-0 right-0 w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-50 border-b border-purple-100 dark:border-purple-800">
+        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+          <div className="flex justify-between items-center py-3 sm:py-4">
+            <div className="flex items-center min-w-0">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gradient-purple truncate">
                 ContentToCalls
               </h1>
             </div>
-            <div className="hidden md:flex space-x-8 items-center">
+            <div className="hidden md:flex space-x-6 lg:space-x-8 items-center">
               <button 
                 onClick={() => scrollToSection('process')}
-                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium whitespace-nowrap"
               >
                 How It Works
               </button>
               <button 
                 onClick={() => scrollToSection('testimonials')}
-                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium whitespace-nowrap"
               >
                 Testimonials
               </button>
               <button 
                 onClick={() => scrollToSection('about')}
-                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium whitespace-nowrap"
               >
                 About
               </button>
               <ThemeToggle />
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4 min-w-0">
               <div className="md:hidden">
                 <ThemeToggle />
               </div>
               <Button 
                 onClick={() => scrollToSection('calendly')}
-                className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105"
+                className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105 text-xs sm:text-sm px-3 sm:px-4 py-2 whitespace-nowrap"
               >
-                Book Free Call
+                Book Call
               </Button>
             </div>
           </div>
@@ -158,21 +158,21 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="pt-20 sm:pt-24 pb-16 sm:pb-20 w-full overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight px-2">
                 Turn Content Into{" "}
                 <span className="text-gradient-purple">
                   Sales Calls
                 </span>
                 <br />
-                <span className="text-4xl md:text-6xl">On Autopilot</span>
+                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl">On Autopilot</span>
               </h1>
             </motion.div>
             
@@ -181,7 +181,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
             >
-              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-12 leading-relaxed max-w-3xl mx-auto px-2">
                 We bring qualified leads to your calendar using high-converting content funnels.{" "}
                 <strong className="text-purple-700 dark:text-purple-300">You focus on coaching, we handle the rest.</strong>
               </p>
@@ -195,10 +195,11 @@ export default function Home() {
               <Button 
                 onClick={() => scrollToSection('calendly')}
                 size="lg"
-                className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-lg px-8 py-4"
+                className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4"
               >
-                <CalendarCheck className="mr-3 h-5 w-5" />
-                Book a Free Discovery Call
+                <CalendarCheck className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
+                <span className="hidden sm:inline">Book a Free Discovery Call</span>
+                <span className="sm:hidden">Book Free Call</span>
               </Button>
             </motion.div>
             
@@ -206,12 +207,12 @@ export default function Home() {
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
-              className="mt-16"
+              className="mt-12 sm:mt-16 px-2"
             >
               <img 
                 src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600" 
                 alt="Professional coaches and consultants in a modern office setting" 
-                className="rounded-2xl shadow-2xl mx-auto max-w-4xl w-full" 
+                className="rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl mx-auto max-w-full w-full" 
               />
             </motion.div>
           </div>
@@ -219,8 +220,8 @@ export default function Home() {
       </section>
 
       {/* Social Proof Section */}
-      <section id="testimonials" className="py-20 bg-white dark:bg-gray-800">
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section id="testimonials" className="py-16 sm:py-20 bg-white dark:bg-gray-800 w-full overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -228,10 +229,10 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-500 dark:to-purple-700 dark:bg-clip-text dark:text-transparent mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-500 dark:to-purple-700 dark:bg-clip-text dark:text-transparent mb-4 px-2">
               Real Results From Real Coaches
             </h2>
-            <p className="text-xl text-gray-700 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-500 dark:to-purple-700 dark:bg-clip-text dark:text-transparent max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-500 dark:to-purple-700 dark:bg-clip-text dark:text-transparent max-w-2xl mx-auto px-2">
               See how our content funnel system transformed their businesses
             </p>
           </motion.div>
@@ -257,7 +258,7 @@ export default function Home() {
                       rotateY: 2,
                       transition: { duration: 0.3 }
                     }}
-                    className="h-full pr-4"
+                    className="h-full"
                   >
                     <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 h-full transform hover:-translate-y-1">
                       <CardContent className="p-8">
@@ -320,19 +321,19 @@ export default function Home() {
       </section>
 
       {/* Process Section */}
-      <section id="process" className="py-20 gradient-purple text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="process" className="py-16 sm:py-20 gradient-purple text-white w-full overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 px-2">
               How Our System Works
             </h2>
-            <p className="text-xl text-purple-100 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-purple-100 max-w-2xl mx-auto px-2">
               Three simple steps to transform your content into qualified sales calls
             </p>
           </motion.div>
@@ -342,17 +343,17 @@ export default function Home() {
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-12"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12"
           >
             {processSteps.map((step, index) => (
               <motion.div key={index} variants={fadeInUp} className="text-center group">
                 <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all transform hover:scale-105">
                   <CardContent className="p-8">
-                    <div className="mb-6">
-                      <step.icon className="h-16 w-16 text-purple-300 mb-4 mx-auto" />
+                    <div className="mb-4 sm:mb-6">
+                      <step.icon className="h-12 sm:h-16 w-12 sm:w-16 text-purple-300 mb-3 sm:mb-4 mx-auto" />
                     </div>
-                    <h3 className="text-2xl font-bold mb-4 text-white">{step.title}</h3>
-                    <p className="text-purple-100 leading-relaxed">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white px-2">{step.title}</h3>
+                    <p className="text-sm sm:text-base text-purple-100 leading-relaxed px-2">
                       {step.description}
                     </p>
                   </CardContent>
@@ -366,61 +367,63 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-center mt-16"
+            className="text-center mt-12 sm:mt-16"
           >
             <Button 
               onClick={() => scrollToSection('calendly')}
               size="lg"
               variant="secondary"
-              className="bg-white text-purple-800 hover:bg-purple-50 transition-all transform hover:scale-105 shadow-lg"
+              className="bg-white text-purple-800 hover:bg-purple-50 transition-all transform hover:scale-105 shadow-lg text-sm sm:text-base px-4 sm:px-6"
             >
-              <Rocket className="mr-3 h-5 w-5" />
-              Start Your Content Funnel Today
+              <Rocket className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
+              <span className="hidden sm:inline">Start Your Content Funnel Today</span>
+              <span className="sm:hidden">Start Today</span>
             </Button>
           </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-16 sm:py-20 w-full overflow-hidden">
+        <div className="w-full max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 px-2">
               Ready to Fill Your Calendar With{" "}
               <span className="text-gradient-purple">
                 Qualified Leads?
               </span>
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto px-2">
               Stop chasing prospects. Let our proven content funnel system bring pre-qualified coaching clients directly to your calendar.
             </p>
             
             <img 
               src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600" 
               alt="Professional business meeting with sales call discussion" 
-              className="rounded-2xl shadow-xl mx-auto mb-12 max-w-4xl w-full" 
+              className="rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl mx-auto mb-8 sm:mb-12 w-full" 
             />
             
             <Button 
               onClick={() => scrollToSection('calendly')}
               size="lg"
-              className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-xl px-10 py-5"
+              className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5"
             >
-              <Calendar className="mr-4 h-6 w-6" />
-              Book Your Free Discovery Call Now
+              <Calendar className="mr-2 sm:mr-3 md:mr-4 h-5 sm:h-6 w-5 sm:w-6" />
+              <span className="hidden sm:inline">Book Your Free Discovery Call Now</span>
+              <span className="sm:hidden">Book Free Call</span>
             </Button>
           </motion.div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="about" className="py-16 sm:py-20 bg-white dark:bg-gray-800 w-full overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           {/* Mobile: Title first, then image, then content */}
           <div className="lg:hidden">
             <motion.div
@@ -430,13 +433,13 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="text-center mb-8"
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 px-2">
                 Meet Your Content Funnel Expert
               </h2>
               <img 
                 src="https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600" 
                 alt="Content marketing professional working on laptop" 
-                className="rounded-full w-64 h-64 object-cover mx-auto shadow-2xl border-8 border-purple-100 dark:border-purple-600 mb-8" 
+                className="rounded-full w-48 sm:w-56 md:w-64 h-48 sm:h-56 md:h-64 object-cover mx-auto shadow-xl sm:shadow-2xl border-4 sm:border-6 md:border-8 border-purple-100 dark:border-purple-600 mb-6 sm:mb-8" 
               />
             </motion.div>
             
@@ -529,19 +532,19 @@ export default function Home() {
       </section>
 
       {/* Calendly Section */}
-      <section id="calendly" className="py-20 gradient-purple">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="calendly" className="py-16 sm:py-20 gradient-purple w-full overflow-hidden">
+        <div className="w-full max-w-4xl mx-auto px-3 sm:px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 px-2">
               Book Your Free Discovery Call
             </h2>
-            <p className="text-xl text-purple-100 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-purple-100 max-w-2xl mx-auto px-2">
               Let's discuss how our content funnel system can transform your coaching business in the next 90 days.
             </p>
           </motion.div>
@@ -552,37 +555,37 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <Card className="bg-white dark:bg-gray-700 shadow-2xl overflow-hidden">
-              <CardContent className="p-8">
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Schedule Your Free 30-Minute Strategy Session</h3>
-                  <p className="text-gray-600 dark:text-gray-300">No pitch, no pressure - just a genuine strategy session about your content and lead generation goals.</p>
+            <Card className="bg-white dark:bg-gray-700 shadow-xl sm:shadow-2xl overflow-hidden w-full">
+              <CardContent className="p-4 sm:p-6 md:p-8">
+                <div className="text-center mb-6 sm:mb-8">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 px-2">Schedule Your Free 30-Minute Strategy Session</h3>
+                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 px-2">No pitch, no pressure - just a genuine strategy session about your content and lead generation goals.</p>
                 </div>
                 
                 {/* Calendly iframe */}
-                <div className="w-full h-96 mb-8">
+                <div className="w-full h-80 sm:h-96 md:h-[500px] mb-6 sm:mb-8">
                   <iframe
                     src="https://calendly.com/your-calendly-link"
                     width="100%"
                     height="100%"
                     frameBorder="0"
                     title="Schedule a meeting"
-                    className="rounded-xl"
+                    className="rounded-lg sm:rounded-xl w-full"
                   ></iframe>
                 </div>
                 
-                <div className="grid md:grid-cols-3 gap-6 text-center">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-center">
                   <div className="flex items-center justify-center">
-                    <Clock className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
-                    <span className="text-gray-700 dark:text-gray-300 font-medium">30 Minutes</span>
+                    <Clock className="h-4 sm:h-5 w-4 sm:w-5 text-purple-600 dark:text-purple-400 mr-2" />
+                    <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium">30 Minutes</span>
                   </div>
                   <div className="flex items-center justify-center">
-                    <Video className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
-                    <span className="text-gray-700 dark:text-gray-300 font-medium">Zoom Call</span>
+                    <Video className="h-4 sm:h-5 w-4 sm:w-5 text-purple-600 dark:text-purple-400 mr-2" />
+                    <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium">Zoom Call</span>
                   </div>
                   <div className="flex items-center justify-center">
-                    <Gift className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
-                    <span className="text-gray-700 dark:text-gray-300 font-medium">Completely Free</span>
+                    <Gift className="h-4 sm:h-5 w-4 sm:w-5 text-purple-600 dark:text-purple-400 mr-2" />
+                    <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium">Completely Free</span>
                   </div>
                 </div>
               </CardContent>
@@ -592,18 +595,18 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-gray-900 text-white py-8 sm:py-12 w-full overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="text-center">
-            <h3 className="text-3xl font-bold text-gradient-purple mb-4">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient-purple mb-3 sm:mb-4">
               ContentToCalls
             </h3>
-            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-gray-400 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
               Helping coaches and info product creators transform their content into predictable sales calls through proven funnel systems.
             </p>
             
-            <div className="border-t border-gray-800 pt-8">
-              <p className="text-gray-400 text-sm">
+            <div className="border-t border-gray-800 pt-6 sm:pt-8">
+              <p className="text-gray-400 text-xs sm:text-sm px-2">
                 © 2024 ContentToCalls. All rights reserved. | Privacy Policy | Terms of Service
               </p>
             </div>
