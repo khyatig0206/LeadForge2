@@ -214,10 +214,10 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-gradient-purple mb-4">
               Real Results From Real Coaches
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-xl text-gradient-purple max-w-2xl mx-auto">
               See how our content funnel system transformed their businesses
             </p>
           </motion.div>
@@ -231,7 +231,7 @@ export default function Home() {
           >
             {testimonials.map((testimonial, index) => (
               <motion.div key={index} variants={fadeInUp}>
-                <Card className="gradient-purple-light dark:bg-gray-700 border-purple-100 dark:border-purple-600 shadow-lg hover:shadow-xl transition-shadow h-full">
+                <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg hover:shadow-xl transition-shadow h-full">
                   <CardContent className="p-8">
                     <div className="flex items-center mb-6">
                       <img 
@@ -240,12 +240,12 @@ export default function Home() {
                         className="w-16 h-16 rounded-full object-cover mr-4" 
                       />
                       <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
-                        <p className="text-purple-600 dark:text-purple-400 font-medium">{testimonial.role}</p>
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100">{testimonial.name}</h4>
+                        <p className="text-purple-600 dark:text-purple-300 font-medium">{testimonial.role}</p>
                       </div>
                     </div>
-                    <p className="text-gray-700 dark:text-gray-300 mb-4 italic">"{testimonial.quote}"</p>
-                    <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{testimonial.result}</div>
+                    <p className="text-gray-700 dark:text-gray-200 mb-4 italic">"{testimonial.quote}"</p>
+                    <div className="text-2xl font-bold text-purple-600 dark:text-purple-300">{testimonial.result}</div>
                   </CardContent>
                 </Card>
               </motion.div>
