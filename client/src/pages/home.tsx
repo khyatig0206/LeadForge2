@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Search, Settings, Bot, Calendar, CalendarCheck, Clock, Video, Gift, Rocket, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -21,6 +23,18 @@ const staggerContainer = {
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
+  const [emblaRef] = useEmblaCarousel(
+    { 
+      loop: true,
+      align: 'start',
+      slidesToScroll: 1,
+      breakpoints: {
+        '(min-width: 768px)': { slidesToScroll: 2 },
+        '(min-width: 1024px)': { slidesToScroll: 3 }
+      }
+    },
+    [Autoplay({ delay: 4000, stopOnInteraction: false })]
+  );
 
   useEffect(() => {
     setIsVisible(true);
@@ -223,32 +237,83 @@ export default function Home() {
           </motion.div>
           
           <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            transition={{ duration: 0.8 }}
+            className="embla carousel-gradient p-6 rounded-2xl"
+            ref={emblaRef}
           >
-            {testimonials.map((testimonial, index) => (
-              <motion.div key={index} variants={fadeInUp}>
-                <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg hover:shadow-xl transition-shadow h-full">
-                  <CardContent className="p-8">
-                    <div className="flex items-center mb-6">
-                      <img 
-                        src={testimonial.image} 
-                        alt={`${testimonial.name} testimonial portrait`} 
-                        className="w-16 h-16 rounded-full object-cover mr-4" 
-                      />
-                      <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-gray-100">{testimonial.name}</h4>
-                        <p className="text-purple-600 dark:text-purple-300 font-medium">{testimonial.role}</p>
-                      </div>
-                    </div>
-                    <p className="text-gray-700 dark:text-gray-200 mb-4 italic">"{testimonial.quote}"</p>
-                    <div className="text-2xl font-bold text-purple-600 dark:text-purple-300">{testimonial.result}</div>
-                  </CardContent>
-                </Card>
-              </motion.div>
+            <div className="embla__container">
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="embla__slide">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    whileHover={{ 
+                      scale: 1.05,
+                      rotateY: 5,
+                      transition: { duration: 0.3 }
+                    }}
+                    className="h-full pr-4"
+                  >
+                    <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 h-full transform hover:-translate-y-2">
+                      <CardContent className="p-8">
+                        <div className="flex items-center mb-6">
+                          <motion.img 
+                            src={testimonial.image} 
+                            alt={`${testimonial.name} testimonial portrait`} 
+                            className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-purple-200 dark:border-purple-400" 
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            transition={{ duration: 0.3 }}
+                          />
+                          <div>
+                            <h4 className="font-semibold text-gray-900 dark:text-gray-100">{testimonial.name}</h4>
+                            <p className="text-purple-600 dark:text-purple-300 font-medium">{testimonial.role}</p>
+                          </div>
+                        </div>
+                        <motion.p 
+                          className="text-gray-700 dark:text-gray-200 mb-4 italic"
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ delay: 0.3 }}
+                        >
+                          "{testimonial.quote}"
+                        </motion.p>
+                        <motion.div 
+                          className="text-2xl font-bold text-purple-600 dark:text-purple-300"
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.5 }}
+                        >
+                          {testimonial.result}
+                        </motion.div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+          
+          {/* Carousel indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="flex justify-center mt-8 space-x-2"
+          >
+            {[...Array(Math.ceil(testimonials.length / 3))].map((_, index) => (
+              <div
+                key={index}
+                className="w-2 h-2 rounded-full bg-purple-300 dark:bg-purple-600 animate-pulse"
+                style={{
+                  animationDelay: `${index * 0.2}s`,
+                }}
+              />
             ))}
           </motion.div>
         </div>
