@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Settings, Bot, Calendar, CalendarCheck, Clock, Video, Gift, Rocket, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -96,9 +97,9 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-purple-100">
+      <nav className="fixed top-0 w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-50 border-b border-purple-100 dark:border-purple-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
@@ -106,32 +107,38 @@ export default function Home() {
                 ContentToCalls
               </h1>
             </div>
-            <div className="hidden md:flex space-x-8">
+            <div className="hidden md:flex space-x-8 items-center">
               <button 
                 onClick={() => scrollToSection('process')}
-                className="text-gray-700 hover:text-purple-600 transition-colors font-medium"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium"
               >
                 How It Works
               </button>
               <button 
                 onClick={() => scrollToSection('testimonials')}
-                className="text-gray-700 hover:text-purple-600 transition-colors font-medium"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium"
               >
                 Testimonials
               </button>
               <button 
                 onClick={() => scrollToSection('about')}
-                className="text-gray-700 hover:text-purple-600 transition-colors font-medium"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium"
               >
                 About
               </button>
+              <ThemeToggle />
             </div>
-            <Button 
-              onClick={() => scrollToSection('calendly')}
-              className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105"
-            >
-              Book Free Call
-            </Button>
+            <div className="flex items-center gap-4">
+              <div className="md:hidden">
+                <ThemeToggle />
+              </div>
+              <Button 
+                onClick={() => scrollToSection('calendly')}
+                className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105"
+              >
+                Book Free Call
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
@@ -145,7 +152,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
                 Turn Content Into{" "}
                 <span className="text-gradient-purple">
                   Sales Calls
@@ -160,9 +167,9 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
             >
-              <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto">
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
                 We bring qualified leads to your calendar using high-converting content funnels.{" "}
-                <strong className="text-purple-700">You focus on coaching, we handle the rest.</strong>
+                <strong className="text-purple-700 dark:text-purple-300">You focus on coaching, we handle the rest.</strong>
               </p>
             </motion.div>
             
@@ -198,7 +205,7 @@ export default function Home() {
       </section>
 
       {/* Social Proof Section */}
-      <section id="testimonials" className="py-20 bg-white">
+      <section id="testimonials" className="py-20 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
@@ -207,10 +214,10 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
               Real Results From Real Coaches
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               See how our content funnel system transformed their businesses
             </p>
           </motion.div>
@@ -224,7 +231,7 @@ export default function Home() {
           >
             {testimonials.map((testimonial, index) => (
               <motion.div key={index} variants={fadeInUp}>
-                <Card className="gradient-purple-light border-purple-100 shadow-lg hover:shadow-xl transition-shadow h-full">
+                <Card className="gradient-purple-light dark:bg-gray-700 border-purple-100 dark:border-purple-600 shadow-lg hover:shadow-xl transition-shadow h-full">
                   <CardContent className="p-8">
                     <div className="flex items-center mb-6">
                       <img 
@@ -233,12 +240,12 @@ export default function Home() {
                         className="w-16 h-16 rounded-full object-cover mr-4" 
                       />
                       <div>
-                        <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                        <p className="text-purple-600 font-medium">{testimonial.role}</p>
+                        <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
+                        <p className="text-purple-600 dark:text-purple-400 font-medium">{testimonial.role}</p>
                       </div>
                     </div>
-                    <p className="text-gray-700 mb-4 italic">"{testimonial.quote}"</p>
-                    <div className="text-2xl font-bold text-purple-600">{testimonial.result}</div>
+                    <p className="text-gray-700 dark:text-gray-300 mb-4 italic">"{testimonial.quote}"</p>
+                    <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{testimonial.result}</div>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -318,13 +325,13 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Ready to Fill Your Calendar With{" "}
               <span className="text-gradient-purple">
                 Qualified Leads?
               </span>
             </h2>
-            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
               Stop chasing prospects. Let our proven content funnel system bring pre-qualified coaching clients directly to your calendar.
             </p>
             
@@ -347,7 +354,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-white">
+      <section id="about" className="py-20 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Photo on LEFT */}
@@ -361,7 +368,7 @@ export default function Home() {
               <img 
                 src="https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600" 
                 alt="Content marketing professional working on laptop" 
-                className="rounded-full w-80 h-80 object-cover mx-auto shadow-2xl border-8 border-purple-100" 
+                className="rounded-full w-80 h-80 object-cover mx-auto shadow-2xl border-8 border-purple-100 dark:border-purple-600" 
               />
             </motion.div>
             
@@ -373,30 +380,30 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="order-1 lg:order-2"
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                 Meet Your Content Funnel Expert
               </h2>
-              <div className="text-lg text-gray-600 space-y-6 leading-relaxed">
+              <div className="text-lg text-gray-600 dark:text-gray-300 space-y-6 leading-relaxed">
                 <p>
                   I'm Alex Martinez, and I've spent the last 7 years helping coaches and info product creators transform their content into predictable revenue streams.
                 </p>
                 <p>
                   After building content funnels for over 200+ coaches, I discovered the exact formula that turns educational content into qualified sales calls. My clients consistently see 300-500% increases in discovery calls within 90 days.
                 </p>
-                <p className="font-semibold text-purple-700">
+                <p className="font-semibold text-purple-700 dark:text-purple-300">
                   The secret? Strategic content that pre-qualifies and nurtures prospects before they even book a call with you.
                 </p>
               </div>
               
               <div className="mt-8 flex flex-wrap gap-4">
-                <div className="bg-purple-50 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 font-semibold">7+ Years Experience</span>
+                <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">7+ Years Experience</span>
                 </div>
-                <div className="bg-purple-50 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 font-semibold">200+ Coaches Helped</span>
+                <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">200+ Coaches Helped</span>
                 </div>
-                <div className="bg-purple-50 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 font-semibold">$2M+ Revenue Generated</span>
+                <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">$2M+ Revenue Generated</span>
                 </div>
               </div>
             </motion.div>
@@ -428,11 +435,11 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <Card className="bg-white shadow-2xl overflow-hidden">
+            <Card className="bg-white dark:bg-gray-700 shadow-2xl overflow-hidden">
               <CardContent className="p-8">
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Schedule Your Free 30-Minute Strategy Session</h3>
-                  <p className="text-gray-600">No pitch, no pressure - just a genuine strategy session about your content and lead generation goals.</p>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Schedule Your Free 30-Minute Strategy Session</h3>
+                  <p className="text-gray-600 dark:text-gray-300">No pitch, no pressure - just a genuine strategy session about your content and lead generation goals.</p>
                 </div>
                 
                 {/* Calendly iframe */}
@@ -449,16 +456,16 @@ export default function Home() {
                 
                 <div className="grid md:grid-cols-3 gap-6 text-center">
                   <div className="flex items-center justify-center">
-                    <Clock className="h-5 w-5 text-purple-600 mr-2" />
-                    <span className="text-gray-700 font-medium">30 Minutes</span>
+                    <Clock className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">30 Minutes</span>
                   </div>
                   <div className="flex items-center justify-center">
-                    <Video className="h-5 w-5 text-purple-600 mr-2" />
-                    <span className="text-gray-700 font-medium">Zoom Call</span>
+                    <Video className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">Zoom Call</span>
                   </div>
                   <div className="flex items-center justify-center">
-                    <Gift className="h-5 w-5 text-purple-600 mr-2" />
-                    <span className="text-gray-700 font-medium">Completely Free</span>
+                    <Gift className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">Completely Free</span>
                   </div>
                 </div>
               </CardContent>

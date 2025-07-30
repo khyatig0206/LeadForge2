@@ -1,6 +1,6 @@
 # Overview
 
-This is a full-stack web application built with a modern tech stack featuring Express.js backend, React frontend with TypeScript, PostgreSQL database with Drizzle ORM, and shadcn/ui component library. The application appears to be a landing page or marketing site with coach testimonials and animated UI components.
+This is a full-stack web application built with a modern tech stack featuring Express.js backend, React frontend with TypeScript, PostgreSQL database with Drizzle ORM, and shadcn/ui component library. The application is a modern, purple-themed one-page website for ContentToCalls, a content agency that helps coaches get qualified sales calls through content funnels. It features testimonials, animated UI components, and a complete dark/light mode system.
 
 ## User Preferences
 
