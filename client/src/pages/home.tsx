@@ -356,7 +356,59 @@ export default function Home() {
       {/* About Section */}
       <section id="about" className="py-20 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Mobile: Title first, then image, then content */}
+          <div className="lg:hidden">
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-8"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8">
+                Meet Your Content Funnel Expert
+              </h2>
+              <img 
+                src="https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600" 
+                alt="Content marketing professional working on laptop" 
+                className="rounded-full w-64 h-64 object-cover mx-auto shadow-2xl border-8 border-purple-100 dark:border-purple-600 mb-8" 
+              />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <div className="text-lg text-gray-600 dark:text-gray-300 space-y-6 leading-relaxed">
+                <p>
+                  I'm Alex Martinez, and I've spent the last 7 years helping coaches and info product creators transform their content into predictable revenue streams.
+                </p>
+                <p>
+                  After building content funnels for over 200+ coaches, I discovered the exact formula that turns educational content into qualified sales calls. My clients consistently see 300-500% increases in discovery calls within 90 days.
+                </p>
+                <p className="font-semibold text-purple-700 dark:text-purple-300">
+                  The secret? Strategic content that pre-qualifies and nurtures prospects before they even book a call with you.
+                </p>
+              </div>
+              
+              <div className="mt-8 flex flex-wrap gap-4 justify-center">
+                <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">7+ Years Experience</span>
+                </div>
+                <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">200+ Coaches Helped</span>
+                </div>
+                <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">$2M+ Revenue Generated</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Desktop: Side by side layout */}
+          <div className="hidden lg:grid lg:grid-cols-2 gap-16 items-center">
             {/* Photo on LEFT */}
             <motion.div
               initial={{ opacity: 0, x: -60 }}
