@@ -220,7 +220,7 @@ export default function Home() {
 
       {/* Social Proof Section */}
       <section id="testimonials" className="py-20 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -228,10 +228,10 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-700 bg-clip-text text-transparent mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-500 dark:to-purple-700 dark:bg-clip-text dark:text-transparent mb-4">
               Real Results From Real Coaches
             </h2>
-            <p className="text-xl bg-gradient-to-r from-purple-600 via-purple-500 to-purple-700 bg-clip-text text-transparent max-w-2xl mx-auto">
+            <p className="text-xl text-gray-700 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-500 dark:to-purple-700 dark:bg-clip-text dark:text-transparent max-w-2xl mx-auto">
               See how our content funnel system transformed their businesses
             </p>
           </motion.div>
@@ -253,20 +253,20 @@ export default function Home() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     whileHover={{ 
-                      scale: 1.05,
-                      rotateY: 5,
+                      scale: 1.02,
+                      rotateY: 2,
                       transition: { duration: 0.3 }
                     }}
                     className="h-full pr-4"
                   >
-                    <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 h-full transform hover:-translate-y-2">
+                    <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 h-full transform hover:-translate-y-1">
                       <CardContent className="p-8">
                         <div className="flex items-center mb-6">
                           <motion.img 
                             src={testimonial.image} 
                             alt={`${testimonial.name} testimonial portrait`} 
                             className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-purple-200 dark:border-purple-400" 
-                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            whileHover={{ scale: 1.05, rotate: 2 }}
                             transition={{ duration: 0.3 }}
                           />
                           <div>
