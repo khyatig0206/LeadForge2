@@ -696,7 +696,7 @@ export default function Home() {
                   <span className="text-purple-700 dark:text-purple-300 font-semibold">3 years+ Experience</span>
                 </div>
                 <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 dark:text-purple-300 font-semibold">15+ coaches helped</span>
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">100+ creators helped</span>
                 </div>
               
               </div>
