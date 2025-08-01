@@ -662,7 +662,7 @@ export default function Home() {
               className="order-2 lg:order-1"
             >
               <img 
-                src="https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600" 
+                src={proImage}
                 alt="Content marketing professional working on laptop" 
                 className="rounded-full w-80 h-80 object-cover mx-auto shadow-2xl border-8 border-purple-100 dark:border-purple-600" 
               />
