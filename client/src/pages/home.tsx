@@ -627,10 +627,10 @@ export default function Home() {
             >
               <div className="text-lg text-gray-600 dark:text-gray-300 space-y-6 leading-relaxed">
                 <p>
-                  I'm Alex Martinez, and I've spent the last 7 years helping coaches and info product creators transform their content into predictable revenue streams.
+                    I’m Prakhyat Gupta, founder of Leadforgee. I help info creators turn their skills into successful businesses. I noticed many talented people have great offers but struggle to find the right audience or get enough sales calls. That’s why I started my agency.
                 </p>
                 <p>
-                  After building content funnels for over 200+ coaches, I discovered the exact formula that turns educational content into qualified sales calls. My clients consistently see 300-500% increases in discovery calls within 90 days.
+                   With my fully done for you content creation service, all you need to do is record your content and I’ll handle scripting, editing, thumbnails, posting and everything in between. I believe luck doesn’t exist, showing up every day is how you make your own. I’m here to make growing your business simple and stress free.
                 </p>
                 <p className="font-semibold text-purple-700 dark:text-purple-300">
                   The secret? Strategic content that pre-qualifies and nurtures prospects before they even book a call with you.
@@ -639,14 +639,12 @@ export default function Home() {
               
               <div className="mt-8 flex flex-wrap gap-4 justify-center">
                 <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 dark:text-purple-300 font-semibold">7+ Years Experience</span>
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">3 years+ Experience</span>
                 </div>
                 <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 dark:text-purple-300 font-semibold">200+ Coaches Helped</span>
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">100+ creators helped</span>
                 </div>
-                <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 dark:text-purple-300 font-semibold">$2M+ Revenue Generated</span>
-                </div>
+                
               </div>
             </motion.div>
           </div>
