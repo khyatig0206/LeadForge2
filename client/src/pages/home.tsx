@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-
+import logoPath from '@/assets/logo.png';
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.8, ease: "easeOut" }
 };
+
+
 
 const staggerContainer = {
   animate: {
@@ -23,6 +25,7 @@ const staggerContainer = {
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isCalendlyReady, setIsCalendlyReady] = useState(false);
   const [emblaRef] = useEmblaCarousel(
     { 
       loop: true,
@@ -40,57 +43,81 @@ export default function Home() {
     setIsVisible(true);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  // Calendly Inline Widget Loader
+  useEffect(() => {
+    const calendlyUrl = "https://calendly.com/leadforgee/onboarding";
+    const calendlyScriptUrl = "https://assets.calendly.com/assets/external/widget.js";
+    const calendlyCssUrl = "https://assets.calendly.com/assets/external/widget.css";
 
-  const testimonials = [
-    {
-      name: "Sarah Johnson",
-      role: "Business Coach",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b692?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150",
-      quote: "Went from 2 calls per month to 15+ qualified calls. My calendar is booked solid with ideal clients!",
-      result: "650% increase in sales calls"
-    },
-    {
-      name: "Mike Rodriguez",
-      role: "Life Coach",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150",
-      quote: "The content funnel brought me 12 new clients in just 8 weeks. ROI was incredible!",
-      result: "$47K revenue in 2 months"
-    },
-    {
-      name: "Lisa Chen",
-      role: "Executive Coach",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150",
-      quote: "Finally stopped chasing clients. Now they come to me pre-sold and ready to invest!",
-      result: "90% close rate on calls"
-    },
-    {
-      name: "David Thompson",
-      role: "Mindset Coach",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150",
-      quote: "Content funnel system doubled my monthly revenue in just 10 weeks. Game changer!",
-      result: "200% revenue increase"
-    },
-    {
-      name: "Emma Wilson",
-      role: "Health Coach",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150",
-      quote: "Automated lead generation freed up 15 hours per week. Now I focus purely on coaching!",
-      result: "15 hours saved weekly"
-    },
-    {
-      name: "James Parker",
-      role: "Career Coach",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150",
-      quote: "From zero to 25 discovery calls per month. The content funnels work like magic!",
-      result: "25 calls per month"
-    }
-  ];
+    const addCalendlyScript = () => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = calendlyScriptUrl;
+        script.async = true;
+        script.onload = resolve;
+        document.body.appendChild(script);
+      });
+    };
+
+    const addCalendlyStyles = () => {
+      if (!document.querySelector(`link[href="${calendlyCssUrl}"]`)) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = calendlyCssUrl;
+        document.head.appendChild(link);
+      }
+    };
+
+    const loadCalendly = async () => {
+      // Add Calendly assets if not already present
+      if (!document.querySelector(`script[src="${calendlyScriptUrl}"]`)) {
+        addCalendlyStyles();
+        await addCalendlyScript();
+      } else {
+        addCalendlyStyles();
+      }
+
+      // Initialize the Calendly widget
+      if  ((window as any).Calendly)  {
+        (window as any).Calendly.initInlineWidget({
+          url: calendlyUrl,
+          parentElement: document.getElementById("calendly-container"),
+          prefill: {},
+          utm: {}
+        });
+        setIsCalendlyReady(true);
+      }
+    };
+
+    loadCalendly();
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    const yOffset = -44; // Adjust this to your navbar height (in px)
+    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+};
+
+  const [testimonials, setTestimonials] = useState<any[]>([]);
+  const [loadingTestimonials, setLoadingTestimonials] = useState(true);
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || ''}/api/testimonial/active`);
+        if (!res.ok) throw new Error('Failed to fetch testimonials');
+        const data = await res.json();
+        setTestimonials(data);
+      } catch (err) {
+        setTestimonials([]);
+      } finally {
+        setLoadingTestimonials(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   const processSteps = [
     {
@@ -113,12 +140,13 @@ export default function Home() {
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-purple-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-50 border-b border-purple-100 dark:border-purple-800">
+      <nav className="fixed top-0 left-0 right-0 w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-50 border-b border-purple-100 dark:border-gray-900">
         <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex justify-between items-center py-3 sm:py-4">
             <div className="flex items-center min-w-0">
+              <img src={logoPath} alt="Leadforgee Logo" className="h-8 md:h-8 mr-2" />
               <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gradient-purple truncate">
-                ContentToCalls
+                LeadForgee
               </h1>
             </div>
             <div className="hidden md:flex space-x-6 lg:space-x-8 items-center">
@@ -148,7 +176,7 @@ export default function Home() {
               </div>
               <Button 
                 onClick={() => scrollToSection('calendly')}
-                className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105 text-xs sm:text-sm px-3 sm:px-4 py-2 whitespace-nowrap"
+                className="gradient-purple text-white hover:opacity-90 rounded-full transition-all transform hover:scale-105 text-xs sm:text-sm px-3 sm:px-4 py-2 whitespace-nowrap"
               >
                 Book Call
               </Button>
@@ -156,71 +184,128 @@ export default function Home() {
           </div>
         </div>
       </nav>
+      {/* Glow/Gradient Background Effect */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[80vw] h-[60vh] rounded-full blur-3xl opacity-60 bg-gradient-to-br from-purple-300 via-purple-100 to-pink-200 dark:from-purple-900 dark:via-purple-700 dark:to-pink-900"></div>
+        </div>
+      {/* Notification Banner */}
+      <div className="w-full flex justify-center items-center pt-24">
+        <div className="bg-gradient-to-r from-purple-500 via-pink-400 to-purple-600 text-white px-6 py-2 rounded-full shadow-lg font-semibold text-sm tracking-wide animate-pulse">
+          <i className="fas fa-bolt mr-2"></i>
+          Currently Onboarding New Clients
+        </div>
+      </div>
 
       {/* Hero Section */}
-      <section className="pt-20 sm:pt-24 pb-16 sm:pb-20 w-full overflow-hidden">
-        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
+      <section className="relative pt-8 sm:pt-8 pb-16 sm:pb-20 w-full overflow-hidden">
+        
+        <div className="w-full max-w-9xl mx-auto px-3 sm:px-4 lg:px-8">
+          <div className="text-center max-w-5xl mx-auto">
+               <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-200 mb-4 sm:mb-6 leading-tight p-2">
             <motion.div
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight px-2">
-                Turn Content Into{" "}
-                <span className="text-gradient-purple">
-                  Sales Calls
-                </span>
-                <br />
-                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl">On Autopilot</span>
-              </h1>
-            </motion.div>
-            
-            <motion.div
+              
+                Our Customizable <span className="text-gradient-purple dark:bg-gradient-to-r dark:from-purple-300 dark:via-purple-400 dark:to-purple-500 dark:bg-clip-text dark:text-transparent"> Content Sales Funnel{" "}</span>
+                <br/>
+                 </motion.div>
+                             <motion.div
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
             >
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-12 leading-relaxed max-w-3xl mx-auto px-2">
-                We bring qualified leads to your calendar using high-converting content funnels.{" "}
-                <strong className="text-purple-700 dark:text-purple-300">You focus on coaching, we handle the rest.</strong>
-              </p>
-            </motion.div>
+              
+                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl">Will Add Qualified Sales Calls To Your Business On Autopilot.</span>
+              
+          </motion.div>
+            </div>
             
             <motion.div
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+              className="flex flex-row items-center justify-center gap-4 sm:gap-6 mb-2"
             >
               <Button 
                 onClick={() => scrollToSection('calendly')}
                 size="lg"
-                className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4"
+                className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4"
               >
                 <CalendarCheck className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
                 <span className="hidden sm:inline">Book a Free Discovery Call</span>
                 <span className="sm:hidden">Book Free Call</span>
               </Button>
+              <Button
+                onClick={() => scrollToSection('process')}
+                size="lg"
+                variant="secondary"
+                className="bg-white text-purple-800 border border-purple-200 hover:bg-purple-50 rounded-full transition-all transform hover:scale-105 shadow text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4"
+              >
+                
+                How it works
+              </Button>
             </motion.div>
             
+            
             <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
-              className="mt-12 sm:mt-16 px-2"
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600" 
-                alt="Professional coaches and consultants in a modern office setting" 
-                className="rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl mx-auto max-w-full w-full" 
-              />
-            </motion.div>
+  initial={{ opacity: 0, y: 60 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
+  className="mt-12 sm:mt-16 px-2"
+>
+  <div className="flex flex-row items-center justify-center gap-3 sm:gap-8 mt-6 mb-4 px-2">
+    {/* Growth Chart */}
+    <div className="flex flex-col items-center text-center max-w-[100px] sm:max-w-xs">
+      <div className="mb-2 sm:mb-3">
+        <span className="inline-flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 shadow-lg transition-transform duration-300 hover:scale-110 hover:shadow-2xl p-2 sm:p-3">
+          <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white drop-shadow-lg" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path d="M3 17l6-6 4 4 8-8" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M21 21H3" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </span>
+      </div>
+      <div className="font-semibold text-xs sm:text-lg sm:text-xl text-gray-900 dark:text-white mb-1">Scale Your Sales Without Scaling Your Content Output</div>
+    </div>
+    {/* Target with Arrow */}
+    <div className="flex flex-col items-center text-center max-w-[100px] sm:max-w-xs">
+      <div className="mb-2 sm:mb-3">
+        <span className="inline-flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 shadow-lg transition-transform duration-300 hover:scale-110 hover:shadow-2xl p-2 sm:p-3 relative">
+          <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white drop-shadow-lg" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="8" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12 8v4l3 3" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </span>
+      </div>
+      <div className="font-semibold text-xs sm:text-lg sm:text-xl text-gray-900 dark:text-white mb-1">Attract Only High-Intent Leads Ready to Buy</div>
+    </div>
+    {/* Robot / Automation Gear */}
+    <div className="flex flex-col items-center text-center max-w-[100px] sm:max-w-xs">
+      <div className="mb-2 sm:mb-3">
+        <span className="inline-flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 shadow-lg transition-transform duration-300 hover:scale-110 hover:shadow-2xl p-2 sm:p-3">
+          <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white drop-shadow-lg" viewBox="0 0 122.88 105.21" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M63.91,18.75v12.16h33.51c5.43,0,9.87,4.44,9.87,9.87v12.47h13.42c1.19,0,2.17,0.97,2.17,2.17v25.28
+              c0,1.19-0.97,2.17-2.17,2.17h-13.42v12.47c0,5.43-4.44,9.87-9.87,9.87h-73c-5.43,0-9.87-4.44-9.87-9.87V82.87H2.17
+              C0.97,82.87,0,81.9,0,80.71V55.42c0-1.19,0.97-2.17,2.17-2.17h12.38V40.79c0-5.43,4.44-9.87,9.87-9.87h33.51V18.75
+              c-3.85-1.26-6.62-4.87-6.62-9.14c0-5.31,4.3-9.61,9.61-9.61c5.31,0,9.61,4.3,9.61,9.61C70.53,13.88,67.75,17.49,63.91,18.75
+              L63.91,18.75z" />
+            <circle cx="44.18" cy="57.32" r="9.72" fill="#EC407A"/>
+            <circle cx="78.7" cy="57.32" r="9.73" fill="#EC407A"/>
+            <line x1="54" y1="85" x2="68" y2="85" stroke="#EC407A" strokeWidth="8" strokeLinecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <div className="font-semibold text-xs sm:text-lg sm:text-xl text-gray-900 dark:text-white mb-1">Fully Automated System That Works While You Sleep</div>
+    </div>
+  </div>
+</motion.div>
           </div>
         </div>
       </section>
 
       {/* Social Proof Section */}
-      <section id="testimonials" className="py-16 sm:py-20 bg-white dark:bg-gray-800 w-full overflow-hidden">
+      <section id="testimonials" className=" py-16 sm:py-20 bg-white dark:bg-gray-800 w-full overflow-hidden" style={{ scrollMarginTop: '96px' }}>
         <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
@@ -229,12 +314,12 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-500 dark:to-purple-700 dark:bg-clip-text dark:text-transparent mb-4 px-2">
-              Real Results From Real Coaches
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-500 dark:to-purple-700 dark:bg-clip-text dark:text-transparent max-w-2xl mx-auto px-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-400 dark:to-purple-600 dark:bg-clip-text dark:text-transparent mb-4 px-2 leading-tight pb-2">
+            See How Our Funnel Changed Their Business
+          </h1>
+            {/* <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-400 dark:to-purple-600 dark:bg-clip-text dark:text-transparent max-w-2xl mx-auto px-2">
               See how our content funnel system transformed their businesses
-            </p>
+            </p> */}
           </motion.div>
           
           <motion.div
@@ -246,8 +331,24 @@ export default function Home() {
             ref={emblaRef}
           >
             <div className="embla__container">
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="embla__slide">
+              {loadingTestimonials ? (
+                <div className="embla__slide">
+                  <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg h-full flex items-center justify-center">
+                    <CardContent className="p-8 text-center">
+                      <div className="text-lg text-gray-700 dark:text-gray-200">Loading testimonials...</div>
+                    </CardContent>
+                  </Card>
+                </div>
+              ) : testimonials.length === 0 ? (
+                <div className="embla__slide">
+                  <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg h-full flex items-center justify-center">
+                    <CardContent className="p-8 text-center">
+                      <div className="text-lg text-gray-700 dark:text-gray-200">No testimonials yet.</div>
+                    </CardContent>
+                  </Card>
+                </div>
+              ) : testimonials.map((testimonial, index) => (
+                <div key={testimonial._id || index} className="embla__slide">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -260,11 +361,11 @@ export default function Home() {
                     }}
                     className="h-full"
                   >
-                    <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 h-full transform hover:-translate-y-1">
+                    <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 h-full transform">
                       <CardContent className="p-8">
                         <div className="flex items-center mb-6">
                           <motion.img 
-                            src={testimonial.image} 
+                            src={testimonial.imageUrl || testimonial.image || 'https://via.placeholder.com/150'} 
                             alt={`${testimonial.name} testimonial portrait`} 
                             className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-purple-200 dark:border-purple-400" 
                             whileHover={{ scale: 1.05, rotate: 2 }}
@@ -272,7 +373,20 @@ export default function Home() {
                           />
                           <div>
                             <h4 className="font-semibold text-gray-900 dark:text-gray-100">{testimonial.name}</h4>
-                            <p className="text-purple-600 dark:text-purple-300 font-medium">{testimonial.role}</p>
+                            <p className="text-purple-600 dark:text-purple-300 font-medium">{testimonial.position}</p>
+                            <div className="flex items-center mt-1 mb-1">
+                              {[...Array(5)].map((_, i) => (
+                                <i
+                                  key={i}
+                                  className={
+                                    i < testimonial.rating
+                                      ? 'fas fa-star text-yellow-400 text-xs mr-0.5'
+                                      : 'far fa-star text-gray-300 text-xs mr-0.5'
+                                  }
+                                  style={{ fontSize: '0.75rem' }}
+                                ></i>
+                              ))}
+                            </div>
                           </div>
                         </div>
                         <motion.p 
@@ -307,7 +421,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="flex justify-center mt-8 space-x-2"
           >
-            {[...Array(Math.ceil(testimonials.length / 3))].map((_, index) => (
+            {[...Array(Math.ceil((testimonials.length || 1) / 3))].map((_, index) => (
               <div
                 key={index}
                 className="w-2 h-2 rounded-full bg-purple-300 dark:bg-purple-600 animate-pulse"
@@ -373,7 +487,7 @@ export default function Home() {
               onClick={() => scrollToSection('calendly')}
               size="lg"
               variant="secondary"
-              className="bg-white text-purple-800 hover:bg-purple-50 transition-all transform hover:scale-105 shadow-lg text-sm sm:text-base px-4 sm:px-6"
+              className="bg-white text-purple-800 hover:bg-purple-50 rounded-full transition-all transform hover:scale-105 shadow-lg text-sm sm:text-base px-4 sm:px-6"
             >
               <Rocket className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
               <span className="hidden sm:inline">Start Your Content Funnel Today</span>
@@ -384,43 +498,92 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 sm:py-20 w-full overflow-hidden">
-        <div className="w-full max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 px-2">
-              Ready to Fill Your Calendar With{" "}
-              <span className="text-gradient-purple">
-                Qualified Leads?
-              </span>
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto px-2">
-              Stop chasing prospects. Let our proven content funnel system bring pre-qualified coaching clients directly to your calendar.
-            </p>
-            
-            <img 
-              src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600" 
-              alt="Professional business meeting with sales call discussion" 
-              className="rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl mx-auto mb-8 sm:mb-12 w-full" 
-            />
-            
-            <Button 
-              onClick={() => scrollToSection('calendly')}
-              size="lg"
-              className="gradient-purple text-white hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5"
-            >
-              <Calendar className="mr-2 sm:mr-3 md:mr-4 h-5 sm:h-6 w-5 sm:w-6" />
-              <span className="hidden sm:inline">Book Your Free Discovery Call Now</span>
-              <span className="sm:hidden">Book Free Call</span>
-            </Button>
-          </motion.div>
-        </div>
-      </section>
+      <section className="relative py-16 sm:py-20 w-full overflow-hidden">
+  {/* Light mode right-side gradient */}
 
+  <div className="w-full max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 text-center relative z-10">
+    <motion.h2
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7 }}
+      className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 px-2"
+    >
+      Ready to Fill Your Calendar With{' '}
+      <span className="text-gradient-purple">Qualified Leads?</span>
+    </motion.h2>
+    <motion.p
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: 0.2 }}
+      className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto px-2"
+    >
+      Stop chasing prospects. Let our proven content funnel system bring pre-qualified coaching clients directly to your calendar.
+    </motion.p>
+    <motion.ul
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
+      className="flex flex-col sm:flex-row justify-center items-center gap-8 mt-10 mb-10 text-left"
+    >
+      <motion.li
+        variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+        className="flex items-center gap-4"
+      >
+        <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-3">
+          <i className="fas fa-calendar-check fa-lg"></i>
+        </span>
+        <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">Pick a time that works for you</span>
+      </motion.li>
+      <motion.li
+        variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+        className="flex items-center gap-4"
+      >
+        <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-3">
+          <i className="fas fa-comments fa-lg"></i>
+        </span>
+        <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">Get a personalized strategy session</span>
+      </motion.li>
+      <motion.li
+        variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+        className="flex items-center gap-4"
+      >
+        <span className="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-3">
+          <i className="fas fa-bullseye fa-lg"></i>
+          
+        </span>
+        <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">Walk away with actionable next steps</span>
+      </motion.li>
+    </motion.ul>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: 0.5 }}
+      className="mt-6 text-purple-700 dark:text-purple-300 italic text-lg font-semibold mb-4"
+    >
+      No sales pitch. No obligation. Just value.
+    </motion.div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: 0.7 }}
+    >
+      <Button
+        onClick={() => scrollToSection('calendly')}
+        size="lg"
+        className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-7"
+      >
+        <Calendar className="mr-2 sm:mr-3 md:mr-4 h-5 sm:h-6 w-5 sm:w-6" />
+        <span className="hidden sm:inline">Book Your Free Discovery Call Now</span>
+        <span className="sm:hidden">Book Free Call</span>
+      </Button>
+    </motion.div>
+  </div>
+</section>
       {/* About Section */}
       <section id="about" className="py-16 sm:py-20 bg-white dark:bg-gray-800 w-full overflow-hidden">
         <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
@@ -533,7 +696,7 @@ export default function Home() {
 
       {/* Calendly Section */}
       <section id="calendly" className="py-16 sm:py-20 gradient-purple w-full overflow-hidden">
-        <div className="w-full max-w-4xl mx-auto px-3 sm:px-4 lg:px-8">
+        <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-2">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -556,38 +719,34 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.3 }}
           >
             <Card className="bg-white dark:bg-gray-700 shadow-xl sm:shadow-2xl overflow-hidden w-full">
-              <CardContent className="p-4 sm:p-6 md:p-8">
-                <div className="text-center mb-6 sm:mb-8">
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 px-2">Schedule Your Free 30-Minute Strategy Session</h3>
-                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 px-2">No pitch, no pressure - just a genuine strategy session about your content and lead generation goals.</p>
+              <CardContent className="p-2 sm:p-6 md:p-4">
+                
+                
+                {/* Calendly Inline Widget */}
+                <div className="w-full h-80 sm:h-100 md:h-[800px] mb-2 sm:mb-6">
+                  <div
+                    id="calendly-container"
+                    className="w-full h-full rounded-lg sm:rounded-xl"
+                    style={{ minWidth: "320px", height: "100%" }}
+                  >
+                    {/* Loading fallback will be handled in the effect */}
+                  </div>
                 </div>
                 
-                {/* Calendly iframe */}
-                <div className="w-full h-80 sm:h-96 md:h-[500px] mb-6 sm:mb-8">
-                  <iframe
-                    src="https://calendly.com/your-calendly-link"
-                    width="100%"
-                    height="100%"
-                    frameBorder="0"
-                    title="Schedule a meeting"
-                    className="rounded-lg sm:rounded-xl w-full"
-                  ></iframe>
-                </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-center">
-                  <div className="flex items-center justify-center">
-                    <Clock className="h-4 sm:h-5 w-4 sm:w-5 text-purple-600 dark:text-purple-400 mr-2" />
-                    <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium">30 Minutes</span>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <Video className="h-4 sm:h-5 w-4 sm:w-5 text-purple-600 dark:text-purple-400 mr-2" />
-                    <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium">Zoom Call</span>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <Gift className="h-4 sm:h-5 w-4 sm:w-5 text-purple-600 dark:text-purple-400 mr-2" />
-                    <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium">Completely Free</span>
-                  </div>
-                </div>
+                <div className="grid grid-cols-3 gap-2 sm:gap-6 text-center">
+  <div className="flex items-center justify-center">
+    <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400 mr-1 sm:mr-2" />
+    <span className="text-xs sm:text-base text-gray-700 dark:text-gray-300 font-medium">30 Minutes</span>
+  </div>
+  <div className="flex items-center justify-center">
+    <Video className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400 mr-1 sm:mr-2" />
+    <span className="text-xs sm:text-base text-gray-700 dark:text-gray-300 font-medium">Zoom Call</span>
+  </div>
+  <div className="flex items-center justify-center">
+    <Gift className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400 mr-1 sm:mr-2" />
+    <span className="text-xs sm:text-base text-gray-700 dark:text-gray-300 font-medium">Completely Free</span>
+  </div>
+</div>
               </CardContent>
             </Card>
           </motion.div>
@@ -599,7 +758,7 @@ export default function Home() {
         <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="text-center">
             <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient-purple mb-3 sm:mb-4">
-              ContentToCalls
+              LeadForgee
             </h3>
             <p className="text-sm sm:text-base text-gray-400 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
               Helping coaches and info product creators transform their content into predictable sales calls through proven funnel systems.

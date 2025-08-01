@@ -57,6 +57,33 @@
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(0, 0%, 98%);
   --ring: hsl(277, 70%, 54%);
+/* Logo gradient overlay for PNG/SVG icons */
+  .logo-gradient-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+  }
+  .logo-gradient-wrapper img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
+    filter: grayscale(1) brightness(2);
+    mix-blend-mode: multiply;
+  }
+  .logo-gradient-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(135deg, hsl(277, 70%, 54%) 0%, hsl(277, 60%, 36%) 100%);
+    opacity: 1;
+    mix-blend-mode: multiply;
+    border-radius: 0.25rem;
+  }
 }
 
 @layer base {
