@@ -7,6 +7,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import logoPath from '@/assets/logo.png';
+import proImage from '@/assets/profile.png';
+
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
   animate: { opacity: 1, y: 0 },
@@ -522,41 +524,52 @@ export default function Home() {
       Stop chasing prospects. Let our proven content funnel system bring pre-qualified coaching clients directly to your calendar.
     </motion.p>
     <motion.ul
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
-      className="flex flex-col sm:flex-row justify-center items-center gap-8 mt-10 mb-10 text-left"
-    >
-      <motion.li
-        variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-        className="flex items-center gap-4"
-      >
-        <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-3">
-          <i className="fas fa-calendar-check fa-lg"></i>
-        </span>
-        <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">Pick a time that works for you</span>
-      </motion.li>
-      <motion.li
-        variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-        className="flex items-center gap-4"
-      >
-        <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-3">
-          <i className="fas fa-comments fa-lg"></i>
-        </span>
-        <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">Get a personalized strategy session</span>
-      </motion.li>
-      <motion.li
-        variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-        className="flex items-center gap-4"
-      >
-        <span className="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-3">
-          <i className="fas fa-bullseye fa-lg"></i>
-          
-        </span>
-        <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">Walk away with actionable next steps</span>
-      </motion.li>
-    </motion.ul>
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
+  className="grid grid-cols-2 sm:flex sm:flex-row justify-center items-center gap-4 sm:gap-8 mt-10 mb-10 text-left"
+>
+  {/* First Feature */}
+  <motion.li
+    variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+    className="flex items-center gap-2 sm:gap-4"
+  >
+    <span className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-2 sm:p-3">
+      <i className="fas fa-calendar-check fa-lg sm:text-lg"></i>
+    </span>
+    <span className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
+      <span className="sm:hidden">Pick a time</span>
+      <span className="hidden sm:inline">Pick a time that works for you</span>
+    </span>
+  </motion.li>
+  {/* Second Feature */}
+  <motion.li
+    variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+    className="flex items-center gap-2 sm:gap-4"
+  >
+    <span className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-2 sm:p-3">
+      <i className="fas fa-comments fa-lg sm:text-lg"></i>
+    </span>
+    <span className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
+      <span className="sm:hidden">Strategy session</span>
+      <span className="hidden sm:inline">Get a personalized strategy session</span>
+    </span>
+  </motion.li>
+  {/* Third Feature, centered below */}
+  <motion.li
+    variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+    className="flex items-center gap-2 sm:gap-4 col-span-2 justify-self-center"
+  >
+    <span className="relative inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-2 sm:p-3">
+      <i className="fas fa-bullseye fa-lg sm:text-lg"></i>
+    </span>
+    <span className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
+      <span className="sm:hidden">Actionable steps</span>
+      <span className="hidden sm:inline">Walk away with actionable next steps</span>
+    </span>
+  </motion.li>
+</motion.ul>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -600,7 +613,7 @@ export default function Home() {
                 Meet Your Content Funnel Expert
               </h2>
               <img 
-                src="https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600" 
+               src={proImage}
                 alt="Content marketing professional working on laptop" 
                 className="rounded-full w-48 sm:w-56 md:w-64 h-48 sm:h-56 md:h-64 object-cover mx-auto shadow-xl sm:shadow-2xl border-4 sm:border-6 md:border-8 border-purple-100 dark:border-purple-600 mb-6 sm:mb-8" 
               />
@@ -755,23 +768,54 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-8 sm:py-12 w-full overflow-hidden">
-        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          <div className="text-center">
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient-purple mb-3 sm:mb-4">
-              LeadForgee
-            </h3>
-            <p className="text-sm sm:text-base text-gray-400 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
-              Helping coaches and info product creators transform their content into predictable sales calls through proven funnel systems.
-            </p>
-            
-            <div className="border-t border-gray-800 pt-6 sm:pt-8">
-              <p className="text-gray-400 text-xs sm:text-sm px-2">
-                © 2024 ContentToCalls. All rights reserved. | Privacy Policy | Terms of Service
-              </p>
-            </div>
-          </div>
+  <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      {/* Contact Info */}
+      <div>
+        <h3 className="text-lg font-bold mb-2">Contact Information</h3>
+        <div className="mb-2">
+          <span className="font-semibold">Our Location:</span>
+          <div className="text-gray-300">Navab Gate, Rampur, India</div>
         </div>
-      </footer>
+        <div className="mb-2">
+          <span className="font-semibold">Phone Number:</span>
+          <div className="text-gray-300">+91 9621005823</div>
+        </div>
+        <div>
+          <span className="font-semibold">Email Address:</span>
+          <div className="text-gray-300">info@leadforgee.com</div>
+        </div>
+      </div>
+      {/* Social Media */}
+      <div className="flex flex-col items-center md:items-start">
+        <h3 className="text-lg font-bold mb-2">Connect with us</h3>
+        <div className="flex space-x-5 mt-2">
+          <a href="https://www.linkedin.com/in/prakhyat-gupta-b1622a320/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i className="fab fa-linkedin text-2xl hover:text-purple-400 transition"></i>
+          </a>
+          <a href="https://x.com/Leadforgee" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">
+            <i className="fab fa-x-twitter text-2xl hover:text-purple-400 transition"></i>
+          </a>
+          <a href="https://www.instagram.com/leadforgee/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <i className="fab fa-instagram text-2xl hover:text-purple-400 transition"></i>
+          </a>
+        </div>
+      </div>
+      {/* Brand/Description */}
+      <div className="flex flex-col items-center md:items-start">
+        <h3 className="text-xl font-bold text-gradient-purple mb-3">LeadForgee</h3>
+        <p className="text-sm text-gray-400 mb-4 max-w-xs">
+          Helping coaches and info product creators transform their content into predictable sales calls through proven funnel systems.
+        </p>
+      </div>
+    </div>
+    <div className="border-t border-gray-800 pt-6 sm:pt-8 text-center">
+      <p className="text-gray-400 text-xs sm:text-sm px-2">
+        © 2025 LeadForgee. All rights reserved. | Privacy Policy | Terms of Service
+      </p>
+    </div>
+  </div>
+</footer>
     </div>
   );
 }
