@@ -29,11 +29,11 @@ const staggerContainer = {
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
   const [isCalendlyReady, setIsCalendlyReady] = useState(false);
-  const autoplay = useMemo(() => Autoplay({
+  const autoplayRef = useRef(Autoplay({
     delay: 4000,
     stopOnInteraction: true,
     stopOnMouseEnter: true,
-  }), []);
+  }));
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
@@ -41,10 +41,12 @@ export default function Home() {
       align: 'start',
       slidesToScroll: 1,
     },
-    [autoplay]
+    [autoplayRef.current]
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+  const hoveringRef = useRef(false);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -59,6 +61,15 @@ export default function Home() {
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  // Ensure autoplay starts once Embla and plugin are ready
+  useEffect(() => {
+    if (!emblaApi) return;
+    const id = window.setTimeout(() => {
+      autoplayRef.current?.play?.();
+    }, 0);
+    return () => window.clearTimeout(id);
+  }, [emblaApi]);
 
   // Calendly Inline Widget Loader
   useEffect(() => {
@@ -185,7 +196,12 @@ export default function Home() {
             onStateChange: (e: any) => {
               const YT = (window as any).YT;
               if (e.data === YT.PlayerState.PLAYING) {
-                autoplay?.stop?.();
+                autoplayRef.current?.stop?.();
+              } else if (
+                e.data === YT.PlayerState.PAUSED ||
+                e.data === YT.PlayerState.ENDED
+              ) {
+                if (!hoveringRef.current) autoplayRef.current?.play?.();
               }
             },
           },
@@ -197,7 +213,7 @@ export default function Home() {
     return () => {
       cancelled = true;
     };
-  }, [videoTestimonials, autoplay]);
+  }, [videoTestimonials]);
 
   const processSteps = [
     {
@@ -407,10 +423,10 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="embla overflow-hidden"
+            className="embla relative overflow-hidden"
             ref={emblaRef}
-            onMouseEnter={() => autoplay?.stop?.()}
-            onMouseLeave={() => autoplay?.play?.()}
+            onMouseEnter={() => { hoveringRef.current = true; setIsHovering(true); autoplayRef.current?.stop?.(); }}
+            onMouseLeave={() => { hoveringRef.current = false; setIsHovering(false); autoplayRef.current?.play?.(); }}
          >
             <div className="flex gap-6">
               {videoTestimonials.map((t, idx) => {
@@ -420,14 +436,14 @@ export default function Home() {
                   <div key={t.id} className="relative flex-[0_0_100%] min-w-0 flex justify-center px-4">
                     {/* Soft glow behind the card */}
                     <div aria-hidden className="absolute inset-0 -z-10 flex justify-center">
-                      <div className="w-2/3 max-w-3xl h-40 md:h-56 bg-gradient-to-r from-purple-400/25 via-purple-500/20 to-pink-500/20 blur-3xl rounded-full"></div>
+                      <div className="w-1/2 max-w-2xl h-36 md:h-48 bg-gradient-to-r from-purple-400/25 via-purple-500/20 to-pink-500/20 blur-3xl rounded-full"></div>
                     </div>
-                    <Card className="w-full max-w-5xl bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-gray-800 border border-purple-100/60 dark:border-gray-700 ring-1 ring-purple-200/50 dark:ring-purple-700/30 shadow-2xl shadow-[0_25px_80px_-20px_rgba(124,58,237,0.45)] dark:shadow-[0_25px_80px_-20px_rgba(0,0,0,0.55)]">
-                      <CardContent className="p-4 md:p-6">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-center min-h-[420px] md:min-h-[480px] lg:min-h-[520px]">
+                    <Card className="w-full max-w-4xl bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-gray-800 border border-purple-100/60 dark:border-gray-700 ring-1 ring-purple-200/50 dark:ring-purple-700/30 shadow-2xl shadow-[0_25px_80px_-20px_rgba(124,58,237,0.45)] dark:shadow-[0_25px_80px_-20px_rgba(0,0,0,0.55)]">
+                      <CardContent className="p-4 md:p-5">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-center min-h-[360px] md:min-h-[420px] lg:min-h-[460px]">
                           {/* Video */}
                           <div className="w-full flex justify-center">
-                            <div className="relative w-full max-w-[320px] md:max-w-[380px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl ring-1 ring-purple-200/60 dark:ring-purple-700/40">
+                            <div className="relative w-full max-w-[260px] md:max-w-[300px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl ring-1 ring-purple-200/60 dark:ring-purple-700/40">
                               <iframe
                                 id={`yt-player-${idx}`}
                                 title={`${t.title} video`}
@@ -464,6 +480,29 @@ export default function Home() {
                 );
               })}
             </div>
+            {/* Arrow controls */}
+            <div className="pointer-events-none select-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2 md:px-4">
+              <button
+                type="button"
+                aria-label="Previous testimonial"
+                onClick={() => { emblaApi?.scrollPrev(); autoplayRef.current?.reset?.(); }}
+                className="pointer-events-auto inline-flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/90 dark:bg-gray-900/80 border border-purple-200/50 dark:border-gray-700 text-purple-700 dark:text-purple-300 shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all backdrop-blur-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 md:h-6 md:w-6">
+                  <path fillRule="evenodd" d="M15.78 3.22a.75.75 0 010 1.06L9.06 11l6.72 6.72a.75.75 0 11-1.06 1.06l-7.25-7.25a.75.75 0 010-1.06l7.25-7.25a.75.75 0 011.06 0z" clipRule="evenodd" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                aria-label="Next testimonial"
+                onClick={() => { emblaApi?.scrollNext(); autoplayRef.current?.reset?.(); }}
+                className="pointer-events-auto inline-flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/90 dark:bg-gray-900/80 border border-purple-200/50 dark:border-gray-700 text-purple-700 dark:text-purple-300 shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all backdrop-blur-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 md:h-6 md:w-6">
+                  <path fillRule="evenodd" d="M8.22 20.78a.75.75 0 010-1.06L14.94 13 8.22 6.28a.75.75 0 111.06-1.06l7.25 7.25a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
           </motion.div>
           
           {/* Carousel indicator */}
@@ -478,7 +517,7 @@ export default function Home() {
               <button
                 key={index}
                 aria-label={`Go to slide ${index + 1}`}
-                onClick={() => emblaApi?.scrollTo(index)}
+                onClick={() => { emblaApi?.scrollTo(index); autoplayRef.current?.reset?.(); }}
                 className={`w-2.5 h-2.5 rounded-full transition-colors ${
                   selectedIndex === index
                     ? 'bg-purple-600 dark:bg-purple-400'
