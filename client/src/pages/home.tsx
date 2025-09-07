@@ -2,12 +2,13 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Settings, Bot, Calendar, CalendarCheck, Clock, Video, Gift, Rocket, ExternalLink } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import logoPath from '@/assets/logo.png';
 import proImage from '@/assets/profile.png';
+// Removed Next.js Image component; using native <img /> with Vite.
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -28,18 +29,32 @@ const staggerContainer = {
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
   const [isCalendlyReady, setIsCalendlyReady] = useState(false);
-  const [emblaRef] = useEmblaCarousel(
-    { 
+  const autoplay = useMemo(() => Autoplay({
+    delay: 4000,
+    stopOnInteraction: true,
+    stopOnMouseEnter: true,
+  }), []);
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
       loop: true,
       align: 'start',
       slidesToScroll: 1,
-      breakpoints: {
-        '(min-width: 768px)': { slidesToScroll: 2 },
-        '(min-width: 1024px)': { slidesToScroll: 3 }
-      }
     },
-    [Autoplay({ delay: 6000, stopOnInteraction: false })]
+    [autoplay]
   );
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    emblaApi.on('select', onSelect);
+    onSelect();
+    return () => {
+      emblaApi.off('select', onSelect as any);
+    };
+  }, [emblaApi]);
 
   useEffect(() => {
     setIsVisible(true);
@@ -103,23 +118,86 @@ export default function Home() {
   }
 };
 
-  const [testimonials, setTestimonials] = useState<any[]>([]);
-  const [loadingTestimonials, setLoadingTestimonials] = useState(true);
+  // NOTE: Replaced dynamic testimonials fetching with static embeds per request.
+  // const [testimonials, setTestimonials] = useState<any[]>([]);
+  // const [loadingTestimonials, setLoadingTestimonials] = useState(true);
+  // useEffect(() => {
+  //   const fetchTestimonials = async () => {
+  //     try {
+  //       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || ''}/api/testimonial/active`);
+  //       if (!res.ok) throw new Error('Failed to fetch testimonials');
+  //       const data = await res.json();
+  //       setTestimonials(data);
+  //     } catch (err) {
+  //       setTestimonials([]);
+  //     } finally {
+  //       setLoadingTestimonials(false);
+  //     }
+  //   };
+  //   fetchTestimonials();
+  // }, []);
+
+  // Video testimonials: 3 YouTube Shorts with titles and descriptions
+  const videoTestimonials = [
+    {
+      id: 'sK4JE2oWbE8',
+      title: 'Kevin – Patio Cooking Channel',
+      description:
+        "We launched Kevin’s Patio channel from scratch, starting at zero. In just a short time, he’s crossed 33,000+ views, 315 hours of watch time, and built momentum with his cooking content.",
+    },
+    {
+      id: '_32X6Fsqxd8',
+      title: 'Neal Brice – Co-owner, Augra Media',
+      description:
+        '“With an audience of over 50k followers, Neal partnered with us to sharpen his growth strategy and take Augra Media’s presence to the next level.”',
+    },
+    {
+      id: 'qPYw09PptSA',
+      title: 'Adi – Founder, Mukon Digital',
+      description:
+        '“Adi trusted us to support Mukon Digital’s expansion. Together, we’ve built stronger systems that attract the right clients consistently.”',
+    },
+  ];
+
+  const slideCount = videoTestimonials.length;
+
+  // Pause autoplay when any video starts playing (YouTube Iframe API)
+  const playersRef = useRef<any[]>([]);
   useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || ''}/api/testimonial/active`);
-        if (!res.ok) throw new Error('Failed to fetch testimonials');
-        const data = await res.json();
-        setTestimonials(data);
-      } catch (err) {
-        setTestimonials([]);
-      } finally {
-        setLoadingTestimonials(false);
-      }
+    if (typeof window === 'undefined') return;
+
+    const ensureApi = () =>
+      new Promise<void>((resolve) => {
+        if ((window as any).YT && (window as any).YT.Player) return resolve();
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        tag.async = true;
+        document.body.appendChild(tag);
+        (window as any).onYouTubeIframeAPIReady = () => resolve();
+      });
+
+    let cancelled = false;
+    ensureApi().then(() => {
+      if (cancelled) return;
+      playersRef.current = videoTestimonials.map((_, idx) => {
+        const player = new (window as any).YT.Player(`yt-player-${idx}`, {
+          events: {
+            onStateChange: (e: any) => {
+              const YT = (window as any).YT;
+              if (e.data === YT.PlayerState.PLAYING) {
+                autoplay?.stop?.();
+              }
+            },
+          },
+        });
+        return player;
+      });
+    });
+
+    return () => {
+      cancelled = true;
     };
-    fetchTestimonials();
-  }, []);
+  }, [videoTestimonials, autoplay]);
 
   const processSteps = [
     {
@@ -146,7 +224,7 @@ export default function Home() {
         <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex justify-between items-center py-3 sm:py-4">
             <div className="flex items-center min-w-0">
-              <img src={logoPath} alt="Leadforgee Logo" className="h-8 md:h-8 mr-2" />
+              <img src={logoPath} alt="Leadforgee Logo" width={32} height={32} className="h-8 md:h-8 mr-2" />
               <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gradient-purple truncate">
                 LeadForgee
               </h1>
@@ -329,89 +407,62 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="embla"
+            className="embla overflow-hidden"
             ref={emblaRef}
-          >
-            <div className="embla__container">
-              {loadingTestimonials ? (
-                <div className="embla__slide">
-                  <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg h-full flex items-center justify-center">
-                    <CardContent className="p-8 text-center">
-                      <div className="text-lg text-gray-700 dark:text-gray-200">Loading testimonials...</div>
-                    </CardContent>
-                  </Card>
-                </div>
-              ) : testimonials.length === 0 ? (
-                <div className="embla__slide">
-                  <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg h-full flex items-center justify-center">
-                    <CardContent className="p-8 text-center">
-                      <div className="text-lg text-gray-700 dark:text-gray-200">No testimonials yet.</div>
-                    </CardContent>
-                  </Card>
-                </div>
-              ) : testimonials.map((testimonial, index) => (
-                <div key={testimonial._id || index} className="embla__slide">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    whileHover={{ 
-                      scale: 1.02,
-                      rotateY: 2,
-                      transition: { duration: 0.3 }
-                    }}
-                    className="h-full"
-                  >
-                    <Card className="gradient-purple-light dark:metallic-card-dark border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 h-full transform">
-                      <CardContent className="p-8">
-                        <div className="flex items-center mb-6">
-                          <motion.img 
-                            src={testimonial.imageUrl || testimonial.image || 'https://via.placeholder.com/150'} 
-                            alt={`${testimonial.name} testimonial portrait`} 
-                            className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-purple-200 dark:border-purple-400" 
-                            whileHover={{ scale: 1.05, rotate: 2 }}
-                            transition={{ duration: 0.3 }}
-                          />
-                          <div>
-                            <h4 className="font-semibold text-gray-900 dark:text-gray-100">{testimonial.name}</h4>
-                            <p className="text-purple-600 dark:text-purple-300 font-medium">{testimonial.position}</p>
-                            <div className="flex items-center mt-1 mb-1">
-                              {[...Array(5)].map((_, i) => (
-                                <i
-                                  key={i}
-                                  className={
-                                    i < testimonial.rating
-                                      ? 'fas fa-star text-yellow-400 text-xs mr-0.5'
-                                      : 'far fa-star text-gray-300 text-xs mr-0.5'
-                                  }
-                                  style={{ fontSize: '0.75rem' }}
-                                ></i>
-                              ))}
+            onMouseEnter={() => autoplay?.stop?.()}
+            onMouseLeave={() => autoplay?.play?.()}
+         >
+            <div className="flex gap-6">
+              {videoTestimonials.map((t, idx) => {
+                const origin = typeof window !== 'undefined' ? window.location.origin : '';
+                const src = `https://www.youtube.com/embed/${t.id}?enablejsapi=1&rel=0&modestbranding=1&playsinline=1&origin=${encodeURIComponent(origin)}`;
+                return (
+                  <div key={t.id} className="relative flex-[0_0_100%] min-w-0 flex justify-center px-4">
+                    {/* Soft glow behind the card */}
+                    <div aria-hidden className="absolute inset-0 -z-10 flex justify-center">
+                      <div className="w-2/3 max-w-3xl h-40 md:h-56 bg-gradient-to-r from-purple-400/25 via-purple-500/20 to-pink-500/20 blur-3xl rounded-full"></div>
+                    </div>
+                    <Card className="w-full max-w-5xl bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-gray-800 border border-purple-100/60 dark:border-gray-700 ring-1 ring-purple-200/50 dark:ring-purple-700/30 shadow-2xl shadow-[0_25px_80px_-20px_rgba(124,58,237,0.45)] dark:shadow-[0_25px_80px_-20px_rgba(0,0,0,0.55)]">
+                      <CardContent className="p-4 md:p-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-center min-h-[420px] md:min-h-[480px] lg:min-h-[520px]">
+                          {/* Video */}
+                          <div className="w-full flex justify-center">
+                            <div className="relative w-full max-w-[320px] md:max-w-[380px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl ring-1 ring-purple-200/60 dark:ring-purple-700/40">
+                              <iframe
+                                id={`yt-player-${idx}`}
+                                title={`${t.title} video`}
+                                src={src}
+                                width="100%"
+                                height="100%"
+                                className="absolute inset-0 w-full h-full"
+                                frameBorder="0"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen
+                              />
                             </div>
                           </div>
+                          {/* Description */}
+                          <motion.div
+                            initial={{ opacity: 0, x: 40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+                            className="px-1"
+                          >
+                            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4">
+                              {t.title}
+                            </h3>
+                            <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base leading-relaxed">
+                              {t.description}
+                            </p>
+                          </motion.div>
                         </div>
-                        <motion.p 
-                          className="text-gray-700 dark:text-gray-200 mb-4 italic"
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          transition={{ delay: 0.3 }}
-                        >
-                          "{testimonial.quote}"
-                        </motion.p>
-                        <motion.div 
-                          className="text-2xl font-bold text-purple-600 dark:text-purple-300"
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.5 }}
-                        >
-                          {testimonial.result}
-                        </motion.div>
                       </CardContent>
                     </Card>
-                  </motion.div>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
           
@@ -423,13 +474,16 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="flex justify-center mt-8 space-x-2"
           >
-            {[...Array(Math.ceil((testimonials.length || 1) / 3))].map((_, index) => (
-              <div
+            {Array.from({ length: slideCount }).map((_, index) => (
+              <button
                 key={index}
-                className="w-2 h-2 rounded-full bg-purple-300 dark:bg-purple-600 animate-pulse"
-                style={{
-                  animationDelay: `${index * 0.2}s`,
-                }}
+                aria-label={`Go to slide ${index + 1}`}
+                onClick={() => emblaApi?.scrollTo(index)}
+                className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                  selectedIndex === index
+                    ? 'bg-purple-600 dark:bg-purple-400'
+                    : 'bg-purple-300 dark:bg-purple-700'
+                }`}
               />
             ))}
           </motion.div>
@@ -612,10 +666,12 @@ export default function Home() {
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 px-2">
                 Meet Your Content Funnel Expert
               </h2>
-              <img 
-               src={proImage}
-                alt="Content marketing professional working on laptop" 
-                className="rounded-full w-48 sm:w-56 md:w-64 h-48 sm:h-56 md:h-64 object-cover mx-auto shadow-xl sm:shadow-2xl border-4 sm:border-6 md:border-8 border-purple-100 dark:border-purple-600 mb-6 sm:mb-8" 
+              <img
+                src={proImage}
+                alt="Content marketing professional working on laptop"
+                width={256}
+                height={256}
+                className="rounded-full w-48 sm:w-56 md:w-64 h-48 sm:h-56 md:h-64 object-cover mx-auto shadow-xl sm:shadow-2xl border-4 sm:border-6 md:border-8 border-purple-100 dark:border-purple-600 mb-6 sm:mb-8"
               />
             </motion.div>
             
@@ -659,10 +715,12 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="order-2 lg:order-1"
             >
-              <img 
+              <img
                 src={proImage}
-                alt="Content marketing professional working on laptop" 
-                className="rounded-full w-80 h-80 object-cover mx-auto shadow-2xl border-8 border-purple-100 dark:border-purple-600" 
+                alt="Content marketing professional working on laptop"
+                width={320}
+                height={320}
+                className="rounded-full w-80 h-80 object-cover mx-auto shadow-2xl border-8 border-purple-100 dark:border-purple-600"
               />
             </motion.div>
             

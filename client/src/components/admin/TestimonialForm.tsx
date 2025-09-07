@@ -27,6 +27,7 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+// Removed Next.js Image; using native <img />.
 
 // Extended schema for form validation
 const testimonialFormSchema = z.object({
@@ -298,9 +299,11 @@ const [imagePreview, setImagePreview] = useState<string | null>(
                       {imagePreview && (
                         <div className="mt-2">
                           <div className="text-sm font-medium mb-2">Preview:</div>
-                          <img 
-                            src={imagePreview} 
-                            alt="Profile preview" 
+                          <img
+                            src={imagePreview || ''}
+                            alt="Profile preview"
+                            width={96}
+                            height={96}
                             className="w-24 h-24 rounded-full object-cover border"
                           />
                         </div>

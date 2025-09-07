@@ -25,6 +25,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
+// Removed Next.js Image; using native <img />.
 
 interface TestimonialListProps {
   onEdit: (testimonial: Testimonial) => void;
@@ -196,9 +197,11 @@ const TestimonialList = ({ onEdit }: TestimonialListProps) => {
               {testimonials.map((testimonial: Testimonial) => (
                 <TableRow key={testimonial._id}>
                   <TableCell>
-                    <img 
-                      src={`${testimonial.imageUrl}`} 
+                    <img
+                      src={testimonial.imageUrl || ''}
                       alt={testimonial.name}
+                      width={40}
+                      height={40}
                       className="w-10 h-10 rounded-full object-cover"
                     />
                   </TableCell>
