@@ -157,13 +157,14 @@ export default function Home() {
         "We launched Kevin’s Patio channel from scratch, starting at zero. In just a short time, he’s crossed 33,000+ views, 315 hours of watch time, and built momentum with his cooking content.",
     },
     {
-      id: '_32X6Fsqxd8',
+      id: 'qPYw09PptSA',
+      
       title: 'Neal Brice – Co-owner, Augra Media',
       description:
         '“With an audience of over 50k followers, Neal partnered with us to sharpen his growth strategy and take Augra Media’s presence to the next level.”',
     },
     {
-      id: 'qPYw09PptSA',
+      id: '_32X6Fsqxd8',
       title: 'Adi – Founder, Mukon Digital',
       description:
         '“Adi trusted us to support Mukon Digital’s expansion. Together, we’ve built stronger systems that attract the right clients consistently.”',
