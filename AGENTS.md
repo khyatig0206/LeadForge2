@@ -1,4 +1,4 @@
-AGENTS — SalesCoach/LeadForge2 workspace guide
+AGENTS — LeadForge2 workspace guide
 
 - Layout: BE (Node/Express API, CommonJS) and client (Vite + React + TS). Deployed via Vercel configs in each folder.
 - Backend stack: Express 5, Mongoose (MongoDB), Cloudinary (multer-storage-cloudinary), JWT auth, Nodemailer. Entry: BE/index.js.
