@@ -325,25 +325,27 @@ export default function Home() {
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-              className="flex flex-col items-center gap-3 sm:gap-4 mb-2"
+              className="flex flex-col items-center gap-2 mb-2"
             >
               <Button 
                 onClick={() => navigate('/apply')}
                 size="lg"
-                className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4"
+                className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-base sm:text-lg lg:text-xl px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6"
               >
-                <CalendarCheck className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
+                <CalendarCheck className="mr-2 sm:mr-3 h-5 sm:h-6 w-5 sm:w-6" />
                 <span className="hidden sm:inline">Book a Free Discovery Call</span>
                 <span className="sm:hidden">Book Free Call</span>
               </Button>
-              <Button
-                onClick={() => scrollToSection('process')}
-                size="lg"
-                variant="secondary"
-                className="bg-white text-purple-800 border border-purple-200 hover:bg-purple-50 rounded-full transition-all transform hover:scale-105 shadow text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4"
-              >
-                How it Works
-              </Button>
+              <div className="mt-4">
+                <Button
+                  onClick={() => scrollToSection('process')}
+                  size="lg"
+                  variant="secondary"
+                  className="bg-white text-purple-800 border border-purple-200 hover:bg-purple-50 rounded-full transition-all transform hover:scale-105 shadow text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4"
+                >
+                  How it Works
+                </Button>
+              </div>
             </motion.div>
             
             
@@ -351,7 +353,7 @@ export default function Home() {
   initial={{ opacity: 0, y: 60 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
-  className="mt-12 sm:mt-16 px-2"
+  className="mt-12 px-2"
 >
   <div className="flex flex-row items-center justify-center gap-3 sm:gap-8 mt-6 mb-4 px-2">
     {/* Growth Chart */}
