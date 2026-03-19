@@ -64,7 +64,7 @@ export default function NotQualifiedPage() {
             <p className="text-gray-700 dark:text-gray-300 text-base sm:text-lg leading-relaxed mb-5">
               We genuinely appreciate you taking the time to apply. After reviewing
               your answers, it looks like we're not the right fit{' '}
-              <span className="font-semibold">right now</span> — and we want to be
+              <span className="font-semibold">right now</span> and we want to be
               upfront about why.
             </p>
 
@@ -80,9 +80,9 @@ export default function NotQualifiedPage() {
             </div>
 
             <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed">
-              This isn't a door closed forever — it's just about where you are in your
+              This isn't a door closed forever! It's just about where you are in your
               journey right now. When your business reaches that milestone, we'd love
-              to hear from you again. Keep going — you're closer than you think.
+              to hear from you again. Keep going! You're closer than you think.
             </p>
           </motion.div>
 
