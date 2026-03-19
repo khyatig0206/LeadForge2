@@ -10,11 +10,15 @@ import AdminDashboard from "@/pages/admin/index";
 import AdminContacts from "@/pages/admin/contacts";
 import AdminTestimonials from "@/pages/admin/testimonials";
 import AdminLogin from "@/pages/admin/login";
+import ApplyPage from "@/pages/apply";
+import NotQualifiedPage from "@/pages/not-qualified";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/apply" component={ApplyPage} />
+      <Route path="/not-qualified" component={NotQualifiedPage} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/contacts" component={AdminContacts} />
       <Route path="/admin/testimonials" component={AdminTestimonials} />

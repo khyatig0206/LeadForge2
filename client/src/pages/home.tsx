@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Settings, Bot, Calendar, CalendarCheck, Clock, Video, Gift, Rocket, ExternalLink } from "lucide-react";
@@ -28,6 +29,7 @@ const staggerContainer = {
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
+  const [, navigate] = useLocation();
   const [isCalendlyReady, setIsCalendlyReady] = useState(false);
   const autoplayRef = useRef(Autoplay({
     delay: 4000,
@@ -272,7 +274,7 @@ export default function Home() {
                 <ThemeToggle />
               </div>
               <Button 
-                onClick={() => scrollToSection('calendly')}
+                onClick={() => navigate('/apply')}
                 className="gradient-purple text-white hover:opacity-90 rounded-full transition-all transform hover:scale-105 text-xs sm:text-sm px-3 sm:px-4 py-2 whitespace-nowrap"
               >
                 Book Call
@@ -326,7 +328,7 @@ export default function Home() {
               className="flex flex-row items-center justify-center gap-4 sm:gap-6 mb-2"
             >
               <Button 
-                onClick={() => scrollToSection('calendly')}
+                onClick={() => navigate('/apply')}
                 size="lg"
                 className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4"
               >
@@ -580,7 +582,7 @@ export default function Home() {
             className="text-center mt-12 sm:mt-16"
           >
             <Button 
-              onClick={() => scrollToSection('calendly')}
+              onClick={() => navigate('/apply')}
               size="lg"
               variant="secondary"
               className="bg-white text-purple-800 hover:bg-purple-50 rounded-full transition-all transform hover:scale-105 shadow-lg text-sm sm:text-base px-4 sm:px-6"
@@ -680,7 +682,7 @@ export default function Home() {
       transition={{ duration: 0.7, delay: 0.7 }}
     >
       <Button
-        onClick={() => scrollToSection('calendly')}
+        onClick={() => navigate('/apply')}
         size="lg"
         className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-7"
       >
