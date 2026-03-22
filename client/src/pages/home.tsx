@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Search, Settings, Bot, Calendar, CalendarCheck, Clock, Video, Gift, Rocket, ExternalLink } from "lucide-react";
+import { Search, Settings, Bot, Calendar, CalendarCheck, Clock, Video, Gift, Rocket, ExternalLink, ChevronDown } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import useEmblaCarousel from 'embla-carousel-react';
@@ -10,6 +10,159 @@ import Autoplay from 'embla-carousel-autoplay';
 import logoPath from '@/assets/logo.png';
 import proImage from '@/assets/profile.png';
 // Removed Next.js Image component; using native <img /> with Vite.
+
+const faqItems = [
+  {
+    question: "Do I need to have a big audience for this to work?",
+    answer:
+      "No. We have worked with coaches who had under 1,000 followers and still generated consistent sales calls through their content. Audience size is not the problem, authority and strategy are.",
+  },
+  {
+    question: "What do I actually have to do on my end?",
+    answer:
+      "Just record yourself. We handle the scripting, editing, thumbnails, captions, posting and everything in between. Your only job is to show up on camera.",
+  },
+  {
+    question: "How long before I start seeing results?",
+    answer:
+      "Most clients start seeing meaningful engagement and inbound interest within the first 60 to 90 days. Content is a compounding asset — the earlier you start the faster it builds.",
+  },
+  {
+    question: "Do you work with coaches in any niche?",
+    answer:
+      "We work exclusively with coaches and consultants. If you are in that space we can almost certainly help you regardless of your specific niche.",
+  },
+  {
+    question: "What if I have tried content before and it did not work?",
+    answer:
+      "That is exactly why we exist. Most coaches who have tried content before were either inconsistent, had no real strategy, or were producing content that looked amateur. We fix all three.",
+  },
+  {
+    question: "Is there a contract?",
+    answer:
+      "No long term contracts. We work on a monthly basis because we believe our results should be reason enough to stay.",
+  },
+];
+
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggle = (idx: number) =>
+    setOpenIndex((prev) => (prev === idx ? null : idx));
+
+  return (
+    <section
+      id="faq"
+      className="py-16 sm:py-24 w-full overflow-hidden bg-gradient-to-br from-purple-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900"
+    >
+      {/* Decorative blobs */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[60vw] h-[40vh] rounded-full blur-3xl opacity-40 bg-gradient-to-br from-purple-300 via-pink-200 to-purple-400 dark:from-purple-900 dark:via-pink-900 dark:to-purple-700" />
+      </div>
+
+      <div className="relative w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-12 sm:mb-16"
+        >
+          <span className="inline-block mb-4 px-4 py-1.5 rounded-full text-sm font-semibold bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 tracking-wide uppercase">
+            Got Questions?
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
+            Frequently Asked{" "}
+            <span className="text-gradient-purple dark:bg-gradient-to-r dark:from-purple-300 dark:via-purple-400 dark:to-purple-500 dark:bg-clip-text dark:text-transparent">
+              Questions
+            </span>
+          </h2>
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
+            Everything you need to know before taking the next step.
+          </p>
+        </motion.div>
+
+        {/* Accordion */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+          className="space-y-3"
+        >
+          {faqItems.map((item, idx) => {
+            const isOpen = openIndex === idx;
+            return (
+              <motion.div
+                key={idx}
+                variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+                className={`rounded-2xl border transition-all duration-300 ${
+                  isOpen
+                    ? "border-purple-400 dark:border-purple-500 shadow-lg shadow-purple-100/60 dark:shadow-purple-900/40 bg-white dark:bg-gray-800"
+                    : "border-purple-100 dark:border-gray-700 bg-white/70 dark:bg-gray-800/60 hover:border-purple-300 dark:hover:border-purple-600"
+                } backdrop-blur-sm`}
+              >
+                <button
+                  onClick={() => toggle(idx)}
+                  className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left group"
+                  aria-expanded={isOpen}
+                >
+                  <span
+                    className={`text-sm sm:text-base font-semibold leading-snug transition-colors duration-200 ${
+                      isOpen
+                        ? "text-purple-700 dark:text-purple-300"
+                        : "text-gray-800 dark:text-gray-200 group-hover:text-purple-600 dark:group-hover:text-purple-400"
+                    }`}
+                  >
+                    {item.question}
+                  </span>
+                  <span
+                    className={`flex-shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 ${
+                      isOpen
+                        ? "bg-purple-600 text-white rotate-180"
+                        : "bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 group-hover:bg-purple-200 dark:group-hover:bg-purple-800"
+                    }`}
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </span>
+                </button>
+
+                {/* Animated answer */}
+                <motion.div
+                  initial={false}
+                  animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <p className="px-5 sm:px-6 pb-5 text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {item.answer}
+                  </p>
+                </motion.div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
+        {/* Bottom CTA nudge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-12 text-center"
+        >
+          <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base mb-5">
+            Still have questions?{" "}
+            <span className="text-purple-600 dark:text-purple-400 font-semibold">
+              We would love to chat.
+            </span>
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -30,7 +183,7 @@ const staggerContainer = {
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
   const [, navigate] = useLocation();
-  const [isCalendlyReady, setIsCalendlyReady] = useState(false);
+
   const autoplayRef = useRef(Autoplay({
     delay: 4000,
     stopOnInteraction: true,
@@ -73,54 +226,7 @@ export default function Home() {
     return () => window.clearTimeout(id);
   }, [emblaApi]);
 
-  // Calendly Inline Widget Loader
-  useEffect(() => {
-    const calendlyUrl = "https://calendly.com/leadforgee/onboarding";
-    const calendlyScriptUrl = "https://assets.calendly.com/assets/external/widget.js";
-    const calendlyCssUrl = "https://assets.calendly.com/assets/external/widget.css";
 
-    const addCalendlyScript = () => {
-      return new Promise((resolve) => {
-        const script = document.createElement("script");
-        script.src = calendlyScriptUrl;
-        script.async = true;
-        script.onload = resolve;
-        document.body.appendChild(script);
-      });
-    };
-
-    const addCalendlyStyles = () => {
-      if (!document.querySelector(`link[href="${calendlyCssUrl}"]`)) {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = calendlyCssUrl;
-        document.head.appendChild(link);
-      }
-    };
-
-    const loadCalendly = async () => {
-      // Add Calendly assets if not already present
-      if (!document.querySelector(`script[src="${calendlyScriptUrl}"]`)) {
-        addCalendlyStyles();
-        await addCalendlyScript();
-      } else {
-        addCalendlyStyles();
-      }
-
-      // Initialize the Calendly widget
-      if  ((window as any).Calendly)  {
-        (window as any).Calendly.initInlineWidget({
-          url: calendlyUrl,
-          parentElement: document.getElementById("calendly-container"),
-          prefill: {},
-          utm: {}
-        });
-        setIsCalendlyReady(true);
-      }
-    };
-
-    loadCalendly();
-  }, []);
 
   const scrollToSection = (sectionId: string) => {
   const element = document.getElementById(sectionId);
@@ -307,18 +413,9 @@ export default function Home() {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               
-                Our Customizable <span className="text-gradient-purple dark:bg-gradient-to-r dark:from-purple-300 dark:via-purple-400 dark:to-purple-500 dark:bg-clip-text dark:text-transparent"> Content Sales Funnel{" "}</span>
-                <br/>
-                 </motion.div>
-                             <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-            >
-              
-                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl">Will Add Qualified Sales Calls To Your Business On Autopilot.</span>
-              
-          </motion.div>
+                Done For You Content That Makes You Look Like The{" "}
+                <span className="text-gradient-purple dark:bg-gradient-to-r dark:from-purple-300 dark:via-purple-400 dark:to-purple-500 dark:bg-clip-text dark:text-transparent">Expert You Actually Are.</span>
+              </motion.div>
             </div>
             
             <motion.div
@@ -726,14 +823,11 @@ export default function Home() {
             >
               <div className="text-lg text-gray-600 dark:text-gray-300 space-y-6 leading-relaxed">
                 <p>
-                    I’m Prakhyat Gupta, founder of Leadforgee. I help info creators turn their skills into successful businesses. I noticed many talented people have great offers but struggle to find the right audience or get enough sales calls. That’s why I started my agency.
+                 I'm Prakhyat Gupta, founder of Leadforgee. I work exclusively with coaches and consultants who are already good at what they do but are being ignored online because their content does not reflect their expertise. 
                 </p>
                 <p>
-                   With my fully done for you content creation service, all you need to do is record your content and I’ll handle scripting, editing, thumbnails, posting and everything in between. I believe luck doesn’t exist, showing up every day is how you make your own. I’m here to make growing your business simple and stress free.
-                </p>
-                <p className="font-semibold text-purple-700 dark:text-purple-300">
-                  The secret? Strategic content that pre-qualifies and nurtures prospects before they even book a call with you.
-                </p>
+I started Leadforgee because I kept seeing incredibly talented coaches lose clients to people who were simply better at showing up online. My team handles everything from scripting to editing to posting so you can stay focused on coaching while your brand finally starts working for you.                </p>
+               
               </div>
               
               <div className="mt-8 flex flex-wrap gap-4 justify-center">
@@ -780,14 +874,12 @@ export default function Home() {
               </h2>
               <div className="text-lg text-gray-600 dark:text-gray-300 space-y-6 leading-relaxed">
                 <p>
-                 I’m Prakhyat Gupta, founder of Leadforgee. I help info creators turn their skills into successful businesses. I noticed many talented people have great offers but struggle to find the right audience or get enough sales calls. That’s why I started my agency.
+                 I'm Prakhyat Gupta, founder of Leadforgee. I work exclusively with coaches and consultants who are already good at what they do but are being ignored online because their content does not reflect their expertise. 
                 </p>
                 <p>
-                  With my fully done for you content creation service, all you need to do is record your content and I’ll handle scripting, editing, thumbnails, posting and everything in between. I believe luck doesn’t exist, showing up every day is how you make your own. I’m here to make growing your business simple and stress free.
+                  I started Leadforgee because I kept seeing incredibly talented coaches lose clients to people who were simply better at showing up online. My team handles everything from scripting to editing to posting so you can stay focused on coaching while your brand finally starts working for you.
                 </p>
-                <p className="font-semibold text-purple-700 dark:text-purple-300">
-                  The secret? Strategic content that pre-qualifies and nurtures prospects before they even book a call with you.
-                </p>
+               
               </div>
               
               <div className="mt-8 flex flex-wrap gap-4">
@@ -804,115 +896,116 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Calendly Section */}
-      <section id="calendly" className="py-16 sm:py-20 gradient-purple w-full overflow-hidden">
-        <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-2">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-8 sm:mb-12"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 px-2">
-              Book Your Free Discovery Call
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-purple-100 max-w-2xl mx-auto px-2">
-              Let's discuss how our content funnel system can transform your coaching business in the next 90 days.
-            </p>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <Card className="bg-white dark:bg-gray-700 shadow-xl sm:shadow-2xl overflow-hidden w-full">
-              <CardContent className="p-2 sm:p-6 md:p-4">
-                
-                
-                {/* Calendly Inline Widget */}
-                <div className="w-full h-80 sm:h-100 md:h-[800px] mb-2 sm:mb-6">
-                  <div
-                    id="calendly-container"
-                    className="w-full h-full rounded-lg sm:rounded-xl"
-                    style={{ minWidth: "320px", height: "100%" }}
-                  >
-                    {/* Loading fallback will be handled in the effect */}
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-2 sm:gap-6 text-center">
-  <div className="flex items-center justify-center">
-    <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400 mr-1 sm:mr-2" />
-    <span className="text-xs sm:text-base text-gray-700 dark:text-gray-300 font-medium">30 Minutes</span>
-  </div>
-  <div className="flex items-center justify-center">
-    <Video className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400 mr-1 sm:mr-2" />
-    <span className="text-xs sm:text-base text-gray-700 dark:text-gray-300 font-medium">Zoom Call</span>
-  </div>
-  <div className="flex items-center justify-center">
-    <Gift className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400 mr-1 sm:mr-2" />
-    <span className="text-xs sm:text-base text-gray-700 dark:text-gray-300 font-medium">Completely Free</span>
-  </div>
-</div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-      </section>
+      {/* FAQ Section */}
+      <FAQSection />
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 sm:py-12 w-full overflow-hidden">
-  <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-      {/* Contact Info */}
-      <div>
-        <h3 className="text-lg font-bold mb-2">Contact Information</h3>
-        <div className="mb-2">
-          <span className="font-semibold">Our Location:</span>
-          <div className="text-gray-300">Navab Gate, Rampur, India</div>
+      <footer className="bg-gray-950 text-white w-full overflow-hidden border-t border-gray-800">
+        {/* Top gradient accent */}
+        <div className="h-1 w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600" />
+
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
+
+          {/* Main grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-12">
+
+            {/* Col 1 – Brand */}
+            <div>
+              <div className="flex items-center mb-4">
+                <img src={logoPath} alt="LeadForgee" className="h-7 w-7 mr-2" />
+                <span className="text-xl font-bold text-gradient-purple">LeadForgee</span>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed mb-5">
+                We turn your expertise into content that attracts high-intent leads and books qualified sales calls — on autopilot.
+              </p>
+              {/* Social icons */}
+              <div className="flex items-center gap-4">
+                <a href="mailto:info@leadforgee.com" aria-label="Email" className="text-gray-400 hover:text-purple-400 transition-colors duration-200">
+                  <i className="fas fa-envelope text-lg" />
+                </a>
+                <a href="https://www.linkedin.com/in/prakhyat-gupta-b1622a320/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-gray-400 hover:text-purple-400 transition-colors duration-200">
+                  <i className="fab fa-linkedin text-lg" />
+                </a>
+                <a href="https://x.com/Leadforgee" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X" className="text-gray-400 hover:text-purple-400 transition-colors duration-200">
+                  <i className="fab fa-x-twitter text-lg" />
+                </a>
+                <a href="https://www.instagram.com/prakhyatguptaa_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-gray-400 hover:text-purple-400 transition-colors duration-200">
+                  <i className="fab fa-instagram text-lg" />
+                </a>
+              </div>
+            </div>
+
+            {/* Col 2 – Quick Links */}
+            <div>
+              <h4 className="text-sm font-semibold uppercase tracking-widest text-purple-400 mb-5">Quick Links</h4>
+              <ul className="space-y-3 text-sm">
+                <li>
+                  <button onClick={() => scrollToSection('process')} className="text-gray-400 underline underline-offset-4 decoration-gray-600 hover:text-white hover:decoration-purple-400 transition-colors duration-200">
+                    How It Works
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => scrollToSection('testimonials')} className="text-gray-400 underline underline-offset-4 decoration-gray-600 hover:text-white hover:decoration-purple-400 transition-colors duration-200">
+                    Testimonials
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => scrollToSection('about')} className="text-gray-400 underline underline-offset-4 decoration-gray-600 hover:text-white hover:decoration-purple-400 transition-colors duration-200">
+                    About Us
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => scrollToSection('book')} className="text-gray-400 underline underline-offset-4 decoration-gray-600 hover:text-white hover:decoration-purple-400 transition-colors duration-200">
+                    Book a Call
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 3 – Contact */}
+            <div>
+              <h4 className="text-sm font-semibold uppercase tracking-widest text-purple-400 mb-5">Get In Touch</h4>
+              <ul className="space-y-4 text-sm text-gray-400">
+                <li>
+                  <a href="mailto:info@leadforgee.com" className="flex items-center gap-3 hover:text-white transition-colors duration-200 group">
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-purple-900/50 group-hover:bg-purple-700/60 transition-colors">
+                      <i className="fas fa-envelope text-purple-400 text-xs" />
+                    </span>
+                    info@leadforgee.com
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.instagram.com/prakhyatguptaa_/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors duration-200 group">
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-purple-900/50 group-hover:bg-purple-700/60 transition-colors">
+                      <i className="fab fa-instagram text-purple-400 text-xs" />
+                    </span>
+                    @prakhyatguptaa_
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/in/prakhyat-gupta-b1622a320/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors duration-200 group">
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-purple-900/50 group-hover:bg-purple-700/60 transition-colors">
+                      <i className="fab fa-linkedin text-purple-400 text-xs" />
+                    </span>
+                    Prakhyat Gupta
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+            <p>© {new Date().getFullYear()} LeadForgee. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <span className="hover:text-gray-300 cursor-pointer transition-colors">Privacy Policy</span>
+              <span className="text-gray-700">|</span>
+              <span className="hover:text-gray-300 cursor-pointer transition-colors">Terms of Service</span>
+            </div>
+          </div>
+
         </div>
-        <div className="mb-2">
-          <span className="font-semibold">Phone Number:</span>
-          <div className="text-gray-300">+91 9621005823</div>
-        </div>
-        <div>
-          <span className="font-semibold">Email Address:</span>
-          <div className="text-gray-300">info@leadforgee.com</div>
-        </div>
-      </div>
-      {/* Social Media */}
-      <div className="flex flex-col items-center md:items-start">
-        <h3 className="text-lg font-bold mb-2">Connect with us</h3>
-        <div className="flex space-x-5 mt-2">
-          <a href="https://www.linkedin.com/in/prakhyat-gupta-b1622a320/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i className="fab fa-linkedin text-2xl hover:text-purple-400 transition"></i>
-          </a>
-          <a href="https://x.com/Leadforgee" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">
-            <i className="fab fa-x-twitter text-2xl hover:text-purple-400 transition"></i>
-          </a>
-          <a href="https://www.instagram.com/leadforgee/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <i className="fab fa-instagram text-2xl hover:text-purple-400 transition"></i>
-          </a>
-        </div>
-      </div>
-      {/* Brand/Description */}
-      <div className="flex flex-col items-center md:items-start">
-        <h3 className="text-xl font-bold text-gradient-purple mb-3">LeadForgee</h3>
-        <p className="text-sm text-gray-400 mb-4 max-w-xs">
-          Helping coaches and info product creators transform their content into predictable sales calls through proven funnel systems.
-        </p>
-      </div>
-    </div>
-    <div className="border-t border-gray-800 pt-6 sm:pt-8 text-center">
-      <p className="text-gray-400 text-xs sm:text-sm px-2">
-        © 2025 LeadForgee. All rights reserved. | Privacy Policy | Terms of Service
-      </p>
-    </div>
-  </div>
-</footer>
+      </footer>
     </div>
   );
 }
