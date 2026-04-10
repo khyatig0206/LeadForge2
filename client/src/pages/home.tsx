@@ -258,12 +258,7 @@ export default function Home() {
 
   // Video testimonials: 3 YouTube Shorts with titles and descriptions
   const videoTestimonials = [
-    {
-      id: 'sK4JE2oWbE8',
-      title: 'Kevin – Patio Cooking Channel',
-      description:
-        "We launched Kevin’s Patio channel from scratch, starting at zero. In just a short time, he’s crossed 33,000+ views, 315 hours of watch time, and built momentum with his cooking content.",
-    },
+    
     {
       id: 'e3os2eEa7ZE',
       
@@ -277,6 +272,12 @@ export default function Home() {
       description:
         'Adi trusted us to support Mukon Digital’s expansion. Together, we’ve built stronger systems that attract the right clients consistently.',
     },
+    {
+      id: 'sK4JE2oWbE8',
+      title: 'Kevin – Patio Cooking Channel',
+      description:
+        "We launched Kevin’s Patio channel from scratch, starting at zero. In just a short time, he’s crossed 33,000+ views, 315 hours of watch time, and built momentum with his cooking content.",
+    }
   ];
 
   const slideCount = videoTestimonials.length;
@@ -427,7 +428,8 @@ export default function Home() {
               <Button 
                 onClick={() => navigate('/apply')}
                 size="lg"
-                className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-base sm:text-lg lg:text-xl px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6"
+                variant="secondary"
+                className="bg-white text-purple-800 border border-purple-200 hover:bg-purple-50 rounded-full transition-all transform hover:scale-105 shadow text-base sm:text-lg lg:text-xl px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6"
               >
                 <CalendarCheck className="mr-2 sm:mr-3 h-5 sm:h-6 w-5 sm:w-6" />
                 <span className="hidden sm:inline">Book a Free Discovery Call</span>
@@ -437,8 +439,7 @@ export default function Home() {
                 <Button
                   onClick={() => scrollToSection('process')}
                   size="lg"
-                  variant="secondary"
-                  className="bg-white text-purple-800 border border-purple-200 hover:bg-purple-50 rounded-full transition-all transform hover:scale-105 shadow text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4"
+                  className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4"
                 >
                   How it Works
                 </Button>
