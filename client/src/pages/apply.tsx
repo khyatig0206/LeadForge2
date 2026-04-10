@@ -1,4 +1,7 @@
 import { useState } from 'react';
+
+// Facebook Pixel global — declared by the inline script in index.html
+declare function fbq(...args: unknown[]): void;
 import { useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -236,6 +239,9 @@ export default function ApplyPage() {
         timestamp: new Date().toISOString(),
       }),
     }).catch(() => {});
+
+    // Fire Facebook Pixel Lead event
+    fbq('track', 'Lead');
 
     // Brief pause for UX feel
     await new Promise(r => setTimeout(r, 700));
