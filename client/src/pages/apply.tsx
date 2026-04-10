@@ -191,9 +191,10 @@ export default function ApplyPage() {
   const set = (key: keyof FormData) => (value: string) =>
     setFormData(prev => ({ ...prev, [key]: value }));
 
+  // Anyone earning $5,000+/month goes straight to Calendly regardless of
+  // their business type or time-in-business answers.
   const isQualified = () =>
-    formData.businessType === 'I am an active coach or consultant' &&
-    formData.timeInBusiness !== 'Less than 6 months' &&
+    formData.monthlyRevenue !== '' &&
     formData.monthlyRevenue !== 'Less than $5,000';
 
   const canProceed = (): boolean => {
