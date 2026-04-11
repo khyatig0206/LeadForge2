@@ -10,7 +10,7 @@ import logoPath from '@/assets/logo.png';
 
 // ─── CONFIG — Replace APPS_SCRIPT_URL after Google Apps Script setup ──────────
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbygT53JIj0uoytvZVS7h8FkDFpJquWJTH6HJBSSjPpChjFLQeahn2LJIIkxSBqMFYY4/exec';
-const CALENDLY_URL = 'https://calendly.com/leadforgee/onboarding';
+const CALENDLY_URL = 'https://calendly.com/leadforgee/getintouch';
 const TOTAL_STEPS = 7;
 // ─────────────────────────────────────────────────────────────────────────────
 
