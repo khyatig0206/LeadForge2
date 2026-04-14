@@ -191,8 +191,6 @@ export default function ApplyPage() {
   const set = (key: keyof FormData) => (value: string) =>
     setFormData(prev => ({ ...prev, [key]: value }));
 
-  // Anyone earning $5,000+/month goes straight to Calendly regardless of
-  // their business type or time-in-business answers.
   const isQualified = () =>
     formData.monthlyRevenue !== '' &&
     formData.monthlyRevenue !== 'Less than $5,000';
@@ -229,8 +227,6 @@ export default function ApplyPage() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
-    // Fire-and-forget POST to Google Apps Script (mode: no-cors avoids CORS errors;
-    // the script still executes and writes the row even though we can't read the response)
     fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -241,20 +237,18 @@ export default function ApplyPage() {
       }),
     }).catch(() => {});
 
-    // Fire Facebook Pixel Lead event
-    fbq('track', 'Lead');
-
     // Brief pause for UX feel
     await new Promise(r => setTimeout(r, 700));
 
     if (isQualified()) {
+      // Fire Lead event ONLY for qualified leads
+      fbq('track', 'Lead');
       window.location.href = CALENDLY_URL;
     } else {
       setLocation('/not-qualified');
     }
   };
 
-  // Warnings for disqualifying selections
   const q5Warning =
     formData.businessType.length > 0 &&
     formData.businessType !== 'I am an active coach or consultant'
@@ -377,7 +371,6 @@ export default function ApplyPage() {
       {/* Main content */}
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-lg">
-          {/* Intro text on step 1 only */}
           {step === 1 && (
             <motion.p
               initial={{ opacity: 0, y: -12 }}
@@ -388,7 +381,6 @@ export default function ApplyPage() {
             </motion.p>
           )}
 
-          {/* Animated step card */}
           <div className="bg-white dark:bg-gray-800/60 rounded-2xl border border-purple-100 dark:border-gray-700/60 shadow-xl shadow-purple-100/40 dark:shadow-none p-8 sm:p-10 min-h-[320px] flex flex-col justify-between">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
@@ -405,7 +397,6 @@ export default function ApplyPage() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Navigation */}
             <div className="flex items-center justify-between mt-8 pt-4 border-t border-gray-100 dark:border-gray-700/50">
               <button
                 type="button"
@@ -436,7 +427,6 @@ export default function ApplyPage() {
             </div>
           </div>
 
-          {/* Footer note */}
           <p className="text-center text-xs text-gray-400 dark:text-gray-600 mt-6">
             Takes less than 2 minutes · No commitment required
           </p>
