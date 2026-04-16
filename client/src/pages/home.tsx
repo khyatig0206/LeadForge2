@@ -333,13 +333,13 @@ export default function Home() {
     },
     {
       icon: Settings,
-      title: "2. Funnel Building",
-      description: "Our team builds high-converting content funnels with automated email sequences that nurture leads and pre-qualify them for sales calls."
+      title: "2. Done For You Content Production",
+      description: "We handle everything from scripting and editing to graphics and captions. You review, approve, and we publish. No back and forth, no bottlenecks."
     },
     {
       icon: Bot,
-      title: "3. Lead Automation",
-      description: "We implement automated systems that consistently deliver qualified leads to your calendar, so you can focus on what you do best - coaching."
+      title: "3. Consistent Publishing and Growth",
+      description: "We keep your content going out on a schedule, week after week, so your audience grows and your ideal clients start seeing you as the obvious choice."
     }
   ];
 
@@ -765,15 +765,7 @@ export default function Home() {
     </span>
   </motion.li>
 </motion.ul>
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: 0.5 }}
-      className="mt-6 text-purple-700 dark:text-purple-300 italic text-lg font-semibold mb-4"
-    >
-      No sales pitch. No obligation. Just value.
-    </motion.div>
+
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -805,7 +797,7 @@ export default function Home() {
               className="text-center mb-8"
             >
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 px-2">
-                Meet Your Content Funnel Expert
+                Meet the Team Behind Your Content
               </h2>
               <img
                 src={proImage}
@@ -824,21 +816,26 @@ export default function Home() {
             >
               <div className="text-lg text-gray-600 dark:text-gray-300 space-y-6 leading-relaxed">
                 <p>
-                 I'm Prakhyat Gupta, founder of Leadforgee. I work exclusively with coaches and consultants who are already good at what they do but are being ignored online because their content does not reflect their expertise. 
+                  I'm Prakhyat Gupta, founder of Leadforgee. I work exclusively with coaches and consultants who are incredible at what they do but are invisible online because their content doesn't reflect their expertise.
                 </p>
                 <p>
-I started Leadforgee because I kept seeing incredibly talented coaches lose clients to people who were simply better at showing up online. My team handles everything from scripting to editing to posting so you can stay focused on coaching while your brand finally starts working for you.                </p>
-               
+                  I started Leadforgee because I kept watching talented coaches lose clients to people who were simply better at showing up online.
+                </p>
+                <p>
+                  Our team handles everything from scripting to editing to publishing so you can stay focused on coaching while your brand finally starts working for you.
+                </p>
+                <p>
+                  We've helped coaches go from posting inconsistently with little traction to generating over a million views, thousands of new followers, and a steady stream of inbound leads, all without them lifting a finger on content.
+                </p>
               </div>
               
               <div className="mt-8 flex flex-wrap gap-4 justify-center">
                 <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 dark:text-purple-300 font-semibold">3 years+ Experience</span>
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">8.4M+ Views Generated</span>
                 </div>
                 <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 dark:text-purple-300 font-semibold">100+ creators helped</span>
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">20+ Clients Served</span>
                 </div>
-                
               </div>
             </motion.div>
           </div>
@@ -871,26 +868,30 @@ I started Leadforgee because I kept seeing incredibly talented coaches lose clie
               className="order-1 lg:order-2"
             >
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Meet Your Content Funnel Expert
+                Meet the Team Behind Your Content
               </h2>
               <div className="text-lg text-gray-600 dark:text-gray-300 space-y-6 leading-relaxed">
                 <p>
-                 I'm Prakhyat Gupta, founder of Leadforgee. I work exclusively with coaches and consultants who are already good at what they do but are being ignored online because their content does not reflect their expertise. 
+                  I'm Prakhyat Gupta, founder of Leadforgee. I work exclusively with coaches and consultants who are incredible at what they do but are invisible online because their content doesn't reflect their expertise.
                 </p>
                 <p>
-                  I started Leadforgee because I kept seeing incredibly talented coaches lose clients to people who were simply better at showing up online. My team handles everything from scripting to editing to posting so you can stay focused on coaching while your brand finally starts working for you.
+                  I started Leadforgee because I kept watching talented coaches lose clients to people who were simply better at showing up online.
                 </p>
-               
+                <p>
+                  Our team handles everything from scripting to editing to publishing so you can stay focused on coaching while your brand finally starts working for you.
+                </p>
+                <p>
+                  We've helped coaches go from posting inconsistently with little traction to generating over a million views, thousands of new followers, and a steady stream of inbound leads, all without them lifting a finger on content.
+                </p>
               </div>
               
               <div className="mt-8 flex flex-wrap gap-4">
                 <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 dark:text-purple-300 font-semibold">3 years+ Experience</span>
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">8.4M+ Views Generated</span>
                 </div>
                 <div className="bg-purple-50 dark:bg-purple-900 px-4 py-2 rounded-full">
-                  <span className="text-purple-700 dark:text-purple-300 font-semibold">100+ creators helped</span>
+                  <span className="text-purple-700 dark:text-purple-300 font-semibold">20+ Clients Served</span>
                 </div>
-              
               </div>
             </motion.div>
           </div>
