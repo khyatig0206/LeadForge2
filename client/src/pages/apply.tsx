@@ -21,12 +21,7 @@ const BUSINESS_OPTIONS = [
   'Something else',
 ];
 
-const TIME_OPTIONS = [
-  'Less than 6 months',
-  '6 months to 1 year',
-  '1 to 3 years',
-  '3 years or more',
-];
+
 
 const REVENUE_OPTIONS = [
   'Less than $5,000',
@@ -41,7 +36,7 @@ interface FormData {
   whatsapp: string;
   instagram: string;
   businessType: string;
-  timeInBusiness: string;
+  clientSource: string;
   monthlyRevenue: string;
 }
 
@@ -184,7 +179,7 @@ export default function ApplyPage() {
     whatsapp: '',
     instagram: '',
     businessType: '',
-    timeInBusiness: '',
+    clientSource: '',
     monthlyRevenue: '',
   });
 
@@ -202,7 +197,7 @@ export default function ApplyPage() {
       case 3: return formData.whatsapp.trim().length > 4;
       case 4: return formData.instagram.trim().length > 0;
       case 5: return formData.businessType.length > 0;
-      case 6: return formData.timeInBusiness.length > 0;
+      case 6: return formData.clientSource.trim().length > 0;
       case 7: return formData.monthlyRevenue.length > 0;
       default: return false;
     }
@@ -319,13 +314,12 @@ export default function ApplyPage() {
         );
       case 6:
         return (
-          <RadioCardStep
+          <ShortAnswerStep
             num={6}
-            question="How long have you been in business?"
-            options={TIME_OPTIONS}
-            value={formData.timeInBusiness}
-            onChange={set('timeInBusiness')}
-            warning={null}
+            question="How are you currently getting most of your clients?"
+            value={formData.clientSource}
+            onChange={set('clientSource')}
+            placeholder="e.g. Referrals, Instagram DMs, cold outreach…"
           />
         );
       case 7:
