@@ -503,133 +503,65 @@ export default function Home() {
       </section>
 
       {/* Social Proof Section */}
-      <section id="testimonials" className=" py-16 sm:py-20 bg-white dark:bg-gray-800 w-full overflow-hidden" style={{ scrollMarginTop: '96px' }}>
-        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-400 dark:to-purple-600 dark:bg-clip-text dark:text-transparent mb-4 px-2 leading-tight pb-2">
-            See How Our Funnel Changed Their Business
-          </h1>
-            {/* <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:bg-gradient-to-r dark:from-purple-600 dark:via-purple-400 dark:to-purple-600 dark:bg-clip-text dark:text-transparent max-w-2xl mx-auto px-2">
-              See how our content funnel system transformed their businesses
-            </p> */}
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="embla relative overflow-hidden"
-            ref={emblaRef}
-            onMouseEnter={() => { hoveringRef.current = true; setIsHovering(true); autoplayRef.current?.stop?.(); }}
-            onMouseLeave={() => { hoveringRef.current = false; setIsHovering(false); autoplayRef.current?.play?.(); }}
-         >
-            <div className="flex gap-6">
-              {videoTestimonials.map((t, idx) => {
-                const origin = typeof window !== 'undefined' ? window.location.origin : '';
-                const src = `https://www.youtube.com/embed/${t.id}?enablejsapi=1&rel=0&modestbranding=1&playsinline=1&origin=${encodeURIComponent(origin)}`;
-                return (
-                  <div key={t.id} className="relative flex-[0_0_100%] min-w-0 flex justify-center px-4">
-                    {/* Soft glow behind the card */}
-                    <div aria-hidden className="absolute inset-0 -z-10 flex justify-center">
-                      <div className="w-1/2 max-w-2xl h-36 md:h-48 bg-gradient-to-r from-purple-400/25 via-purple-500/20 to-pink-500/20 blur-3xl rounded-full"></div>
-                    </div>
-                    <Card className="w-full max-w-4xl bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-gray-800 border border-purple-100/60 dark:border-gray-700 ring-1 ring-purple-200/50 dark:ring-purple-700/30 shadow-2xl shadow-[0_25px_80px_-20px_rgba(124,58,237,0.45)] dark:shadow-[0_25px_80px_-20px_rgba(0,0,0,0.55)]">
-                      <CardContent className="p-4 md:p-5">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-center min-h-[360px] md:min-h-[420px] lg:min-h-[460px]">
-                          {/* Video */}
-                          <div className="w-full flex justify-center">
-                            <div className="relative w-full max-w-[260px] md:max-w-[300px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl ring-1 ring-purple-200/60 dark:ring-purple-700/40">
-                              <iframe
-                                id={`yt-player-${idx}`}
-                                title={`${t.title} video`}
-                                src={src}
-                                width="100%"
-                                height="100%"
-                                className="absolute inset-0 w-full h-full"
-                                frameBorder="0"
-                                referrerPolicy="strict-origin-when-cross-origin"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowFullScreen
-                              />
-                            </div>
-                          </div>
-                          {/* Description */}
-                          <motion.div
-                            initial={{ opacity: 0, x: 40 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
-                            className="px-1"
-                          >
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4">
-                              {t.title}
-                            </h3>
-                            <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base leading-relaxed">
-                              {t.description}
-                            </p>
-                          </motion.div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                );
-              })}
-            </div>
-            {/* Arrow controls */}
-            <div className="pointer-events-none select-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2 md:px-4">
-              <button
-                type="button"
-                aria-label="Previous testimonial"
-                onClick={() => { emblaApi?.scrollPrev(); autoplayRef.current?.reset?.(); }}
-                className="pointer-events-auto inline-flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/90 dark:bg-gray-900/80 border border-purple-200/50 dark:border-gray-700 text-purple-700 dark:text-purple-300 shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all backdrop-blur-sm"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 md:h-6 md:w-6">
-                  <path fillRule="evenodd" d="M15.78 3.22a.75.75 0 010 1.06L9.06 11l6.72 6.72a.75.75 0 11-1.06 1.06l-7.25-7.25a.75.75 0 010-1.06l7.25-7.25a.75.75 0 011.06 0z" clipRule="evenodd" />
-                </svg>
-              </button>
-              <button
-                type="button"
-                aria-label="Next testimonial"
-                onClick={() => { emblaApi?.scrollNext(); autoplayRef.current?.reset?.(); }}
-                className="pointer-events-auto inline-flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/90 dark:bg-gray-900/80 border border-purple-200/50 dark:border-gray-700 text-purple-700 dark:text-purple-300 shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all backdrop-blur-sm"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 md:h-6 md:w-6">
-                  <path fillRule="evenodd" d="M8.22 20.78a.75.75 0 010-1.06L14.94 13 8.22 6.28a.75.75 0 111.06-1.06l7.25 7.25a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0z" clipRule="evenodd" />
-                </svg>
-              </button>
-            </div>
-          </motion.div>
-          
-          {/* Carousel indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex justify-center mt-8 space-x-2"
-          >
-            {Array.from({ length: slideCount }).map((_, index) => (
-              <button
-                key={index}
-                aria-label={`Go to slide ${index + 1}`}
-                onClick={() => { emblaApi?.scrollTo(index); autoplayRef.current?.reset?.(); }}
-                className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                  selectedIndex === index
-                    ? 'bg-purple-600 dark:bg-purple-400'
-                    : 'bg-purple-300 dark:bg-purple-700'
-                }`}
-              />
-            ))}
-          </motion.div>
+        {/* Testimonials Section */}
+<section id="testimonials" className="py-20 px-4 bg-black">
+  <div className="max-w-6xl mx-auto">
+    <div className="text-center mb-14">
+      <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+        What Our Clients Say
+      </h2>
+      <p className="text-gray-400 text-lg max-w-xl mx-auto">
+        Real results from real people who trusted us with their content.
+      </p>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      {/* Testimonial 1 - Patricia */}
+      <div className="bg-[#0f0f0f] border border-purple-900/40 rounded-2xl p-6 flex flex-col gap-4 hover:border-purple-600/60 transition-colors duration-300">
+        <div className="flex gap-1 text-purple-400 text-lg">
+          {"★★★★★"}
         </div>
-      </section>
+        <p className="text-gray-300 text-sm leading-relaxed flex-1">
+          "Prakhyat Gupta, Founder of Leadforgee, delivers a clear and structured approach to lead generation. His short assessments are precise, actionable, and easy to implement. His professional collaboration, reliable communication, and consistent support define the experience. A strong partner for organisations focusing on measurable growth in client acquisition."
+        </p>
+        <div className="pt-2 border-t border-purple-900/30">
+          <p className="text-white font-semibold text-sm">Patricia Mösch</p>
+          <p className="text-purple-400 text-xs mt-0.5">CEO, Decision Coach for Executives & HR</p>
+        </div>
+      </div>
+
+      {/* Testimonial 2 - Justin */}
+      <div className="bg-[#0f0f0f] border border-purple-900/40 rounded-2xl p-6 flex flex-col gap-4 hover:border-purple-600/60 transition-colors duration-300">
+        <div className="flex gap-1 text-purple-400 text-lg">
+          {"★★★★★"}
+        </div>
+        <p className="text-gray-300 text-sm leading-relaxed flex-1">
+          "Working with Prakhyat has been a great experience. He's incredibly patient with all my edit requests, always brings a sharp creative eye to my videos, and consistently makes them better. On top of that, he's super prompt and reliable, which makes the entire process smooth and stress-free. Highly recommended!"
+        </p>
+        <div className="pt-2 border-t border-purple-900/30">
+          <p className="text-white font-semibold text-sm">Justin Moore</p>
+          <p className="text-purple-400 text-xs mt-0.5">Founder, Creator Wizard</p>
+        </div>
+      </div>
+
+      {/* Testimonial 3 - Augra Media */}
+      <div className="bg-[#0f0f0f] border border-purple-900/40 rounded-2xl p-6 flex flex-col gap-4 hover:border-purple-600/60 transition-colors duration-300">
+        <div className="flex gap-1 text-purple-400 text-lg">
+          {"★★★★★"}
+        </div>
+        <p className="text-gray-300 text-sm leading-relaxed flex-1">
+          "He really just helps our company scale because he takes care of the whole backend processes. He handles all the editing, all the staffing and all the management. It is very easy for me to focus on the business when he is taking care of everything in the back. He takes a lot off your shoulders, which you really need if you want to scale your business."
+        </p>
+        <div className="pt-2 border-t border-purple-900/30">
+          <p className="text-white font-semibold text-sm">Co-Founder, Augra Media</p>
+          <p className="text-purple-400 text-xs mt-0.5">Agency Co-Founder</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
       {/* Process Section */}
       <section id="process" className="py-16 sm:py-20 gradient-purple text-white w-full overflow-hidden">
