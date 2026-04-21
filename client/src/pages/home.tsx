@@ -541,7 +541,7 @@ export default function Home() {
         </p>
         <div className="pt-2 border-t border-purple-900/30">
           <p className="text-white font-semibold text-sm">Justin Moore</p>
-          <p className="text-purple-400 text-xs mt-0.5">Founder, Creator Wizard</p>
+          <p className="text-purple-400 text-xs mt-0.5">Sponsorship Coach, Creator Wizard</p>
         </div>
       </div>
 
