@@ -515,205 +515,125 @@ export default function Home() {
       </p>
     </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-      {/* Testimonial 1 - Patricia */}
-      <div className="bg-[#0f0f0f] border border-purple-900/40 rounded-2xl p-6 flex flex-col gap-4 hover:border-purple-600/60 transition-colors duration-300">
-        <div className="flex gap-1 text-purple-400 text-lg">
-          {"★★★★★"}
-        </div>
-        <p className="text-gray-300 text-sm leading-relaxed flex-1">
-          "Prakhyat Gupta, Founder of Leadforgee, delivers a clear and structured approach to lead generation. His short assessments are precise, actionable, and easy to implement. His professional collaboration, reliable communication, and consistent support define the experience. A strong partner for organisations focusing on measurable growth in client acquisition."
-        </p>
-        <div className="pt-2 border-t border-purple-900/30">
-          <p className="text-white font-semibold text-sm">Patricia Mösch</p>
-          <p className="text-purple-400 text-xs mt-0.5">CEO, Decision Coach for Executives & HR</p>
-        </div>
-      </div>
-
-      {/* Testimonial 2 - Justin */}
-      <div className="bg-[#0f0f0f] border border-purple-900/40 rounded-2xl p-6 flex flex-col gap-4 hover:border-purple-600/60 transition-colors duration-300">
-        <div className="flex gap-1 text-purple-400 text-lg">
-          {"★★★★★"}
-        </div>
-        <p className="text-gray-300 text-sm leading-relaxed flex-1">
-          "Working with Prakhyat has been a great experience. He's incredibly patient with all my edit requests, always brings a sharp creative eye to my videos, and consistently makes them better. On top of that, he's super prompt and reliable, which makes the entire process smooth and stress-free. Highly recommended!"
-        </p>
-        <div className="pt-2 border-t border-purple-900/30">
-          <p className="text-white font-semibold text-sm">Justin Moore</p>
-          <p className="text-purple-400 text-xs mt-0.5">Sponsorship Coach, Creator Wizard</p>
-        </div>
-      </div>
-
-      {/* Testimonial 3 - Augra Media */}
-      <div className="bg-[#0f0f0f] border border-purple-900/40 rounded-2xl p-6 flex flex-col gap-4 hover:border-purple-600/60 transition-colors duration-300">
-        <div className="flex gap-1 text-purple-400 text-lg">
-          {"★★★★★"}
-        </div>
-        <p className="text-gray-300 text-sm leading-relaxed flex-1">
-          "He really just helps our company scale because he takes care of the whole backend processes. He handles all the editing, all the staffing and all the management. It is very easy for me to focus on the business when he is taking care of everything in the back. He takes a lot off your shoulders, which you really need if you want to scale your business."
-        </p>
-        <div className="pt-2 border-t border-purple-900/30">
-          <p className="text-white font-semibold text-sm">Co-Founder, Augra Media</p>
-          <p className="text-purple-400 text-xs mt-0.5">Agency Co-Founder</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-      {/* Process Section */}
-      <section id="process" className="py-16 sm:py-20 gradient-purple text-white w-full overflow-hidden">
-        <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 px-2">
-              How Our System Works
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-purple-100 max-w-2xl mx-auto px-2">
-              Three simple steps to transform your content into qualified sales calls
-            </p>
-          </motion.div>
-          
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12"
-          >
-            {processSteps.map((step, index) => (
-              <motion.div key={index} variants={fadeInUp} className="text-center group">
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all transform hover:scale-105">
-                  <CardContent className="p-8">
-                    <div className="mb-4 sm:mb-6">
-                      <step.icon className="h-12 sm:h-16 w-12 sm:w-16 text-purple-300 mb-3 sm:mb-4 mx-auto" />
-                    </div>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white px-2">{step.title}</h3>
-                    <p className="text-sm sm:text-base text-purple-100 leading-relaxed px-2">
-                      {step.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-center mt-12 sm:mt-16"
-          >
-            <Button 
-              onClick={() => navigate('/apply')}
-              size="lg"
-              variant="secondary"
-              className="bg-white text-purple-800 hover:bg-purple-50 rounded-full transition-all transform hover:scale-105 shadow-lg text-sm sm:text-base px-4 sm:px-6"
-            >
-              <Rocket className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
-              <span className="hidden sm:inline">Start Your Content Funnel Today</span>
-              <span className="sm:hidden">Start Today</span>
-            </Button>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative py-16 sm:py-20 w-full overflow-hidden">
-  {/* Light mode right-side gradient */}
-
-  <div className="w-full max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 text-center relative z-10">
-    <motion.h2
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7 }}
-      className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 px-2"
-    >
-      Ready to Fill Your Calendar With{' '}
-      <span className="text-gradient-purple">Qualified Leads?</span>
-    </motion.h2>
-    <motion.p
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: 0.2 }}
-      className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto px-2"
-    >
-      Stop chasing prospects. Let our proven content funnel system bring pre-qualified coaching clients directly to your calendar.
-    </motion.p>
-   <motion.ul
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true }}
-  variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
-  className="grid grid-cols-2 sm:flex sm:flex-row justify-center items-center justify-items-center gap-4 sm:gap-8 mt-10 mb-10 text-left"
->
-  {/* First Feature */}
-  <motion.li
-    variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-    className="flex items-center gap-2 sm:gap-4"
-  >
-    <span className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-2 sm:p-3">
-      <i className="fas fa-calendar-check fa-lg sm:text-lg"></i>
-    </span>
-    <span className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
-      <span className="sm:hidden">Pick a time</span>
-      <span className="hidden sm:inline">Pick a time that works for you</span>
-    </span>
-  </motion.li>
-  {/* Second Feature */}
-  <motion.li
-    variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-    className="flex items-center gap-2 sm:gap-4"
-  >
-    <span className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-2 sm:p-3">
-      <i className="fas fa-comments fa-lg sm:text-lg"></i>
-    </span>
-    <span className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
-      <span className="sm:hidden">Strategy session</span>
-      <span className="hidden sm:inline">Get a personalized strategy session</span>
-    </span>
-  </motion.li>
-  {/* Third Feature, centered below */}
-  <motion.li
-    variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-    className="flex items-center gap-2 sm:gap-4 col-span-2 justify-self-center"
-  >
-    <span className="relative inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 text-white shadow-xl border-2 border-white dark:border-gray-700 p-2 sm:p-3">
-      <i className="fas fa-bullseye fa-lg sm:text-lg"></i>
-    </span>
-    <span className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
-      <span className="sm:hidden">Actionable steps</span>
-      <span className="hidden sm:inline">Walk away with actionable next steps</span>
-    </span>
-  </motion.li>
-</motion.ul>
-
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: 0.7 }}
-    >
-      <Button
-        onClick={() => navigate('/apply')}
-        size="lg"
-        className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-7"
+    <div className="relative overflow-hidden">
+      <div
+        id="testimonial-track"
+        className="flex transition-transform duration-500 ease-in-out"
+        style={{ transform: 'translateX(0%)' }}
       >
-        <Calendar className="mr-2 sm:mr-3 md:mr-4 h-5 sm:h-6 w-5 sm:w-6" />
-        <span className="hidden sm:inline">Book Your Free Discovery Call Now</span>
-        <span className="sm:hidden">Book Free Call</span>
-      </Button>
-    </motion.div>
+
+        {/* Card 1 - Patricia */}
+        <div className="min-w-full px-4 md:px-16">
+          <div className="bg-[#0f0f0f] border border-purple-900/40 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
+            <div className="flex-shrink-0">
+              <img
+                src="/Patricia.jpeg"
+                alt="Patricia Mösch"
+                className="w-24 h-24 rounded-full object-cover border-2 border-purple-600"
+              />
+            </div>
+            <div className="flex flex-col gap-4">
+              <p className="text-gray-300 text-base md:text-lg leading-relaxed">
+                "Prakhyat Gupta, Founder of Leadforgee, delivers a clear and structured approach to lead generation. His short assessments are precise, actionable, and easy to implement. His professional collaboration, reliable communication, and consistent support define the experience. A strong partner for organisations focusing on measurable growth in client acquisition."
+              </p>
+              <div>
+                <p className="text-white font-semibold">Patricia Mösch</p>
+                <p className="text-purple-400 text-sm">CEO, Decision Coach for Executives & HR</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2 - Justin */}
+        <div className="min-w-full px-4 md:px-16">
+          <div className="bg-[#0f0f0f] border border-purple-900/40 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
+            <div className="flex-shrink-0">
+              <img
+                src="/Justin.jpeg"
+                alt="Justin Moore"
+                className="w-24 h-24 rounded-full object-cover border-2 border-purple-600"
+              />
+            </div>
+            <div className="flex flex-col gap-4">
+              <p className="text-gray-300 text-base md:text-lg leading-relaxed">
+                "Working with Prakhyat has been a great experience. He's incredibly patient with all my edit requests, always brings a sharp creative eye to my videos, and consistently makes them better. On top of that, he's super prompt and reliable, which makes the entire process smooth and stress-free. Highly recommended!"
+              </p>
+              <div>
+                <p className="text-white font-semibold">Justin Moore</p>
+                <p className="text-purple-400 text-sm">Founder, Creator Wizard</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3 - Neal */}
+        <div className="min-w-full px-4 md:px-16">
+          <div className="bg-[#0f0f0f] border border-purple-900/40 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
+            <div className="flex-shrink-0">
+              <img
+                src="/Neal.jpg"
+                alt="Neal Brice"
+                className="w-24 h-24 rounded-full object-cover border-2 border-purple-600"
+              />
+            </div>
+            <div className="flex flex-col gap-4">
+              <p className="text-gray-300 text-base md:text-lg leading-relaxed">
+                "He really just helps our company scale because he takes care of the whole backend processes. He handles all the editing, all the staffing and all the management. It is very easy for me to focus on the business when he is taking care of everything in the back. He takes a lot off your shoulders, which you really need if you want to scale your business."
+              </p>
+              <div>
+                <p className="text-white font-semibold">Neal Brice</p>
+                <p className="text-purple-400 text-sm">Co-Founder, Augra Media</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Navigation Arrows */}
+      <button
+        onClick={() => {
+          const track = document.getElementById('testimonial-track');
+          if (!track) return;
+          const current = parseInt(track.getAttribute('data-index') || '0');
+          const prev = Math.max(current - 1, 0);
+          track.style.transform = `translateX(-${prev * 100}%)`;
+          track.setAttribute('data-index', String(prev));
+        }}
+        className="absolute left-2 top-1/2 -translate-y-1/2 bg-purple-700 hover:bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+      >
+        ‹
+      </button>
+      <button
+        onClick={() => {
+          const track = document.getElementById('testimonial-track');
+          if (!track) return;
+          const current = parseInt(track.getAttribute('data-index') || '0');
+          const next = Math.min(current + 1, 2);
+          track.style.transform = `translateX(-${next * 100}%)`;
+          track.setAttribute('data-index', String(next));
+        }}
+        className="absolute right-2 top-1/2 -translate-y-1/2 bg-purple-700 hover:bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+      >
+        ›
+      </button>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-2 mt-6">
+        {[0, 1, 2].map((i) => (
+          <button
+            key={i}
+            onClick={() => {
+              const track = document.getElementById('testimonial-track');
+              if (!track) return;
+              track.style.transform = `translateX(-${i * 100}%)`;
+              track.setAttribute('data-index', String(i));
+            }}
+            className="w-2 h-2 rounded-full bg-purple-600 opacity-50 hover:opacity-100 transition-opacity duration-200"
+          />
+        ))}
+      </div>
+    </div>
   </div>
 </section>
       {/* About Section */}
