@@ -560,7 +560,7 @@ export default function Home() {
               </p>
               <div>
                 <p className="text-white font-semibold">Justin Moore</p>
-                <p className="text-purple-400 text-sm">Founder, Creator Wizard</p>
+                <p className="text-purple-400 text-sm">Sponsorship Coach, Creator Wizard</p>
               </div>
             </div>
           </div>
