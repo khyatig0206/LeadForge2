@@ -43,6 +43,7 @@ const faqItems = [
 
 function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [, navigate] = useLocation();
 
   const toggle = (idx: number) =>
     setOpenIndex((prev) => (prev === idx ? null : idx));
@@ -150,6 +151,13 @@ function FAQSection() {
               We would love to chat.
             </span>
           </p>
+          <Button
+            onClick={() => navigate("/apply")}
+            size="lg"
+            className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg text-sm sm:text-base px-8 py-4"
+          >
+            Let's Talk
+          </Button>
         </motion.div>
       </div>
     </section>
@@ -372,7 +380,7 @@ export default function Home() {
                 onClick={() => navigate("/apply")}
                 className="gradient-purple text-white hover:opacity-90 rounded-full transition-all transform hover:scale-105 text-xs sm:text-sm px-3 sm:px-4 py-2 whitespace-nowrap"
               >
-                Book Call
+                Book a Call
               </Button>
             </div>
           </div>
@@ -422,8 +430,8 @@ export default function Home() {
                 className="bg-white text-purple-800 border border-purple-200 hover:bg-purple-50 rounded-full transition-all transform hover:scale-105 shadow text-base sm:text-lg lg:text-xl px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6"
               >
                 <CalendarCheck className="mr-2 sm:mr-3 h-5 sm:h-6 w-5 sm:w-6" />
-                <span className="hidden sm:inline">Book a Free Discovery Call</span>
-                <span className="sm:hidden">Book Free Call</span>
+                <span className="hidden sm:inline">Claim Your Authority</span>
+                <span className="sm:hidden">Claim Your Authority</span>
               </Button>
               <div className="mt-4">
                 <Button
@@ -541,7 +549,7 @@ export default function Home() {
               className="bg-white text-purple-800 hover:bg-purple-50 rounded-full transition-all transform hover:scale-105 shadow-lg text-sm sm:text-base px-4 sm:px-6"
             >
               <Rocket className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
-              <span className="hidden sm:inline">Start Your Content Funnel Today</span>
+              <span className="hidden sm:inline">Start the Authority Shift</span>
               <span className="sm:hidden">Start Today</span>
             </Button>
           </motion.div>
@@ -617,8 +625,8 @@ export default function Home() {
               className="gradient-purple text-white rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-7"
             >
               <Calendar className="mr-2 sm:mr-3 md:mr-4 h-5 sm:h-6 w-5 sm:w-6" />
-              <span className="hidden sm:inline">Book Your Free Discovery Call Now</span>
-              <span className="sm:hidden">Book Free Call</span>
+              <span className="hidden sm:inline">Book My Strategy Session</span>
+              <span className="sm:hidden">Book Now</span>
             </Button>
           </motion.div>
         </div>
