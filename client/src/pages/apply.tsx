@@ -11,17 +11,8 @@ import logoPath from '@/assets/logo.png';
 // ─── CONFIG — Replace APPS_SCRIPT_URL after Google Apps Script setup ──────────
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbygT53JIj0uoytvZVS7h8FkDFpJquWJTH6HJBSSjPpChjFLQeahn2LJIIkxSBqMFYY4/exec';
 const CALENDLY_URL = 'https://calendly.com/leadforgee/getintouch';
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 6;
 // ─────────────────────────────────────────────────────────────────────────────
-
-const BUSINESS_OPTIONS = [
-  'I am an active coach or consultant',
-  'I am just starting my coaching business',
-  'I run an agency or service business',
-  'Something else',
-];
-
-
 
 const REVENUE_OPTIONS = [
   'Less than $5,000',
@@ -35,7 +26,6 @@ interface FormData {
   email: string;
   whatsapp: string;
   instagram: string;
-  businessType: string;
   clientSource: string;
   monthlyRevenue: string;
 }
@@ -178,7 +168,6 @@ export default function ApplyPage() {
     email: '',
     whatsapp: '',
     instagram: '',
-    businessType: '',
     clientSource: '',
     monthlyRevenue: '',
   });
@@ -196,9 +185,8 @@ export default function ApplyPage() {
       case 2: return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
       case 3: return formData.whatsapp.trim().length > 4;
       case 4: return formData.instagram.trim().length > 0;
-      case 5: return formData.businessType.length > 0;
-      case 6: return formData.clientSource.trim().length > 0;
-      case 7: return formData.monthlyRevenue.length > 0;
+      case 5: return formData.clientSource.trim().length > 0;
+      case 6: return formData.monthlyRevenue.length > 0;
       default: return false;
     }
   };
@@ -244,13 +232,7 @@ export default function ApplyPage() {
     }
   };
 
-  const q5Warning =
-    formData.businessType.length > 0 &&
-    formData.businessType !== 'I am an active coach or consultant'
-      ? 'Our program is specifically designed for active coaches and consultants. You may not be a fit at this stage.'
-      : null;
-
-  const q7Warning =
+  const q6Warning =
     formData.monthlyRevenue === 'Less than $5,000'
       ? 'We only work with coaches who are already generating at least $5,000 per month. If that is not you yet, we are not the right fit at this stage.'
       : null;
@@ -303,34 +285,23 @@ export default function ApplyPage() {
         );
       case 5:
         return (
-          <RadioCardStep
-            num={5}
-            question="What best describes you?"
-            options={BUSINESS_OPTIONS}
-            value={formData.businessType}
-            onChange={set('businessType')}
-            warning={q5Warning}
-          />
-        );
-      case 6:
-        return (
           <ShortAnswerStep
-            num={6}
+            num={5}
             question="How are you currently getting most of your clients?"
             value={formData.clientSource}
             onChange={set('clientSource')}
             placeholder="e.g. Referrals, Instagram DMs, cold outreach…"
           />
         );
-      case 7:
+      case 6:
         return (
           <RadioCardStep
-            num={7}
+            num={6}
             question="What is your current monthly revenue?"
             options={REVENUE_OPTIONS}
             value={formData.monthlyRevenue}
             onChange={set('monthlyRevenue')}
-            warning={q7Warning}
+            warning={q6Warning}
           />
         );
       default:
