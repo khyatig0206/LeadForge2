@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Facebook Pixel global — declared by the inline script in index.html
 declare function fbq(...args: unknown[]): void;
@@ -59,6 +59,7 @@ function ShortAnswerStep({
   placeholder,
   type = 'text',
   hint,
+  onEnter,
 }: {
   num: number;
   question: string;
@@ -67,6 +68,7 @@ function ShortAnswerStep({
   placeholder: string;
   type?: string;
   hint?: string;
+  onEnter: () => void;
 }) {
   return (
     <div>
@@ -75,6 +77,7 @@ function ShortAnswerStep({
         type={type}
         value={value}
         onChange={e => onChange(e.target.value)}
+        onKeyDown={e => { if (e.key === 'Enter') onEnter(); }}
         placeholder={placeholder}
         autoFocus
         className="w-full bg-transparent border-0 border-b-2 border-purple-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 outline-none text-gray-900 dark:text-white text-xl py-3 placeholder:text-gray-300 dark:placeholder:text-gray-600 transition-colors"
@@ -192,6 +195,7 @@ export default function ApplyPage() {
   };
 
   const goNext = async () => {
+    if (!canProceed() || isSubmitting) return;
     if (step < TOTAL_STEPS) {
       setDirection(1);
       setStep(s => s + 1);
@@ -247,6 +251,7 @@ export default function ApplyPage() {
             value={formData.fullName}
             onChange={set('fullName')}
             placeholder="Jane Smith"
+            onEnter={goNext}
           />
         );
       case 2:
@@ -258,6 +263,7 @@ export default function ApplyPage() {
             onChange={set('email')}
             placeholder="jane@example.com"
             type="email"
+            onEnter={goNext}
           />
         );
       case 3:
@@ -270,6 +276,7 @@ export default function ApplyPage() {
             placeholder="+1 234 567 8900"
             type="tel"
             hint="Include country code (e.g. +1, +44, +91)"
+            onEnter={goNext}
           />
         );
       case 4:
@@ -281,6 +288,7 @@ export default function ApplyPage() {
             onChange={set('instagram')}
             placeholder="@yourhandle"
             hint="We'll use this to learn more about your content."
+            onEnter={goNext}
           />
         );
       case 5:
@@ -291,6 +299,7 @@ export default function ApplyPage() {
             value={formData.clientSource}
             onChange={set('clientSource')}
             placeholder="e.g. Referrals, Instagram DMs, cold outreach…"
+            onEnter={goNext}
           />
         );
       case 6:
